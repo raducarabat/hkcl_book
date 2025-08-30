@@ -213,13 +213,12 @@
 </ul>
 <h2 id="using-hackcontrol-as-an-organizer"><a class="header" href="#using-hackcontrol-as-an-organizer">Using Hackcontrol as an Organizer</a></h2>
 <h3 id="1-creating-your-first-hackathon"><a class="header" href="#1-creating-your-first-hackathon">1. Creating Your First Hackathon</a></h3>
-<p>After signing in and getting admin privileges:</p>
+<p>After signing in and getting organizer privileges:</p>
 <ol>
 <li><strong>Go to your dashboard</strong> (<code>/app</code>) and click "Create New Hackathon"</li>
 <li><strong>Set up your event</strong>:
 <ul>
 <li><strong>Name</strong>: Your hackathon's title</li>
-<li><strong>URL</strong>: Custom path (like "spring-2024-hackathon")</li>
 <li><strong>Description</strong>: Event overview and goals</li>
 <li><strong>Rules</strong>: Participation guidelines and requirements</li>
 <li><strong>Criteria</strong>: How projects will be judged</li>
@@ -246,7 +245,7 @@
 </ul>
 <p><strong>Share Your Event</strong>:</p>
 <ul>
-<li>Copy and share your hackathon's custom URL</li>
+<li>Copy and share your hackathon's URL</li>
 <li>Participants can join directly without additional registration</li>
 </ul>
 <h3 id="3-ending-your-hackathon"><a class="header" href="#3-ending-your-hackathon">3. Ending Your Hackathon</a></h3>
@@ -352,22 +351,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
