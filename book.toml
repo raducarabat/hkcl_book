@@ -3,3 +3,6 @@ authors = ["GitDoppler"]
 language = "en"
 src = "src"
 title = "hkcl book"
+
+[build]
+build-dir = "docs"
