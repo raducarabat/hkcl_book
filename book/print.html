@@ -1,0 +1,2779 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>hkcl book</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">hkcl book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="welcome-to-hackcontrol"><a class="header" href="#welcome-to-hackcontrol">Welcome to Hackcontrol</a></h1>
+<p>Hackcontrol is a modern hackathon management platform that makes organizing and participating in hackathons simple and enjoyable. This guide will walk you through how to use the platform as a participant, organizer, or judge.</p>
+<h2 id="-platform-demo"><a class="header" href="#-platform-demo">🎥 Platform Demo</a></h2>
+<p>Watch this quick demo to see Hackcontrol in action:</p>
+<p><a href="https://www.youtube.com/watch?v=YOUR_VIDEO_ID"><img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg" alt="Hackcontrol Demo" /></a></p>
+<p><em>Click the image above to watch a 3-minute walkthrough of the platform</em></p>
+<h2 id="getting-started-as-a-participant"><a class="header" href="#getting-started-as-a-participant">Getting Started as a Participant</a></h2>
+<h3 id="1-joining-a-hackathon"><a class="header" href="#1-joining-a-hackathon">1. Joining a Hackathon</a></h3>
+<p>When an organizer shares a Hackcontrol hackathon link (like <code>hackcontrol.dev/awesome-hackathon</code>), here's how to join:</p>
+<ol>
+<li><strong>Visit the hackathon page</strong> using the provided link</li>
+<li><strong>Sign in with GitHub</strong> - Click the "Sign in with GitHub" button and authorize the app</li>
+<li><strong>View the hackathon details</strong> - Read the description, rules, and submission criteria</li>
+<li><strong>Check announcements</strong> - Stay updated with important information from organizers</li>
+</ol>
+<h3 id="2-submitting-your-project"><a class="header" href="#2-submitting-your-project">2. Submitting Your Project</a></h3>
+<p>Once you're ready to submit your project:</p>
+<ol>
+<li>
+<p><strong>Click "Submit Project"</strong> on the hackathon page</p>
+</li>
+<li>
+<p><strong>Fill out the submission form</strong>:</p>
+<ul>
+<li><strong>Project Title</strong>: Give your project a catchy name</li>
+<li><strong>Description</strong>: Explain what your project does and how you built it</li>
+<li><strong>Project URL</strong>: Link to your GitHub repo, live demo, or presentation</li>
+<li><strong>Team Members</strong>: Add your teammates (optional)</li>
+</ul>
+</li>
+<li>
+<p><strong>Submit and track progress</strong> - Your submission will appear on the hackathon page and you can see its review status</p>
+</li>
+</ol>
+<h3 id="3-following-results"><a class="header" href="#3-following-results">3. Following Results</a></h3>
+<ul>
+<li><strong>Check review status</strong> - See if judges have reviewed your project</li>
+<li><strong>View announcements</strong> - Get updates from organizers about judging progress</li>
+<li><strong>See final results</strong> - Winners are announced on the hackathon page</li>
+</ul>
+<h2 id="using-hackcontrol-as-an-organizer"><a class="header" href="#using-hackcontrol-as-an-organizer">Using Hackcontrol as an Organizer</a></h2>
+<h3 id="1-creating-your-first-hackathon"><a class="header" href="#1-creating-your-first-hackathon">1. Creating Your First Hackathon</a></h3>
+<p>After signing in and getting admin privileges:</p>
+<ol>
+<li><strong>Go to your dashboard</strong> (<code>/app</code>) and click "Create New Hackathon"</li>
+<li><strong>Set up your event</strong>:
+<ul>
+<li><strong>Name</strong>: Your hackathon's title</li>
+<li><strong>URL</strong>: Custom path (like "spring-2024-hackathon")</li>
+<li><strong>Description</strong>: Event overview and goals</li>
+<li><strong>Rules</strong>: Participation guidelines and requirements</li>
+<li><strong>Criteria</strong>: How projects will be judged</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-managing-your-hackathon"><a class="header" href="#2-managing-your-hackathon">2. Managing Your Hackathon</a></h3>
+<p><strong>Invite Judges</strong>:</p>
+<ul>
+<li>Use the "Judge Manager" to add judges by searching for their usernames</li>
+<li>Judges get access to review and score submissions</li>
+</ul>
+<p><strong>Make Announcements</strong>:</p>
+<ul>
+<li>Keep participants informed with updates</li>
+<li>Mark important announcements to highlight them</li>
+<li>Announcements appear on the hackathon page in real-time</li>
+</ul>
+<p><strong>Monitor Submissions</strong>:</p>
+<ul>
+<li>View all project submissions in one place</li>
+<li>Track which projects have been reviewed</li>
+<li>Mark winners once judging is complete</li>
+</ul>
+<p><strong>Share Your Event</strong>:</p>
+<ul>
+<li>Copy and share your hackathon's custom URL</li>
+<li>Participants can join directly without additional registration</li>
+</ul>
+<h3 id="3-ending-your-hackathon"><a class="header" href="#3-ending-your-hackathon">3. Ending Your Hackathon</a></h3>
+<p>When judging is complete:</p>
+<ol>
+<li><strong>Review final scores</strong> - Check the leaderboard and judge feedback</li>
+<li><strong>Select winners</strong> - Mark winning projects</li>
+<li><strong>Finish the hackathon</strong> - This locks submissions and finalizes results</li>
+<li><strong>Celebrate</strong> - Winners are displayed prominently on the hackathon page</li>
+</ol>
+<h2 id="judging-projects"><a class="header" href="#judging-projects">Judging Projects</a></h2>
+<h3 id="1-accessing-your-judge-dashboard"><a class="header" href="#1-accessing-your-judge-dashboard">1. Accessing Your Judge Dashboard</a></h3>
+<p>When invited as a judge:</p>
+<ol>
+<li><strong>Sign in</strong> with your GitHub account</li>
+<li><strong>Visit the hackathon page</strong> - You'll see a "Judge Dashboard" option</li>
+<li><strong>View projects to review</strong> - See all submissions you need to evaluate</li>
+</ol>
+<h3 id="2-evaluating-projects"><a class="header" href="#2-evaluating-projects">2. Evaluating Projects</a></h3>
+<p>For each project:</p>
+<ol>
+<li><strong>Review the submission</strong> - Read the description and visit the project URL</li>
+<li><strong>Score the project</strong> - Give it a numeric score based on the hackathon criteria</li>
+<li><strong>Submit your evaluation</strong> - Your score is recorded and averages with other judges</li>
+</ol>
+<h3 id="3-judge-responsibilities"><a class="header" href="#3-judge-responsibilities">3. Judge Responsibilities</a></h3>
+<ul>
+<li><strong>Review all assigned projects</strong> fairly and thoroughly</li>
+<li><strong>Use consistent criteria</strong> across all submissions</li>
+<li><strong>Complete reviews in a timely manner</strong> to help organizers announce results</li>
+<li><strong>Maintain objectivity</strong> when evaluating projects</li>
+</ul>
+<h2 id="understanding-user-roles"><a class="header" href="#understanding-user-roles">Understanding User Roles</a></h2>
+<p><strong>Regular User</strong>:</p>
+<ul>
+<li>Can join hackathons and submit projects</li>
+<li>View public hackathon information</li>
+<li>Receive announcements from organizers</li>
+</ul>
+<p><strong>Organizer</strong>:</p>
+<ul>
+<li>Create and manage hackathons</li>
+<li>Invite judges and manage participants</li>
+<li>Make announcements and control event settings</li>
+<li>Access analytics and submission data</li>
+</ul>
+<p><strong>Judge</strong>:</p>
+<ul>
+<li>Evaluate and score hackathon submissions</li>
+<li>Access special judge dashboard</li>
+<li>Provide feedback on projects</li>
+</ul>
+<h2 id="tips-for-success"><a class="header" href="#tips-for-success">Tips for Success</a></h2>
+<h3 id="for-participants"><a class="header" href="#for-participants">For Participants</a></h3>
+<ul>
+<li><strong>Submit early</strong> - Don't wait until the last minute</li>
+<li><strong>Read the criteria</strong> - Understand how you'll be judged</li>
+<li><strong>Include a good demo</strong> - Make sure your project URL works and showcases your work</li>
+<li><strong>Follow announcements</strong> - Stay updated on deadlines and changes</li>
+</ul>
+<h3 id="for-organizers"><a class="header" href="#for-organizers">For Organizers</a></h3>
+<ul>
+<li><strong>Set clear expectations</strong> - Write detailed rules and judging criteria</li>
+<li><strong>Communicate regularly</strong> - Use announcements to keep participants informed</li>
+<li><strong>Plan judging carefully</strong> - Invite enough judges and give them clear guidelines</li>
+<li><strong>Test everything</strong> - Make sure your hackathon setup works before sharing</li>
+</ul>
+<h3 id="for-judges"><a class="header" href="#for-judges">For Judges</a></h3>
+<ul>
+<li><strong>Be fair and consistent</strong> - Use the same standards for all projects</li>
+<li><strong>Visit project links</strong> - Actually try the demos and read the code</li>
+<li><strong>Score thoughtfully</strong> - Take time to properly evaluate each submission</li>
+<li><strong>Ask questions</strong> - Reach out to organizers if criteria are unclear</li>
+</ul>
+<h2 id="getting-help"><a class="header" href="#getting-help">Getting Help</a></h2>
+<p>If you encounter issues or have questions:</p>
+<ul>
+<li>Check if there are any announcements from the organizer</li>
+<li>Look for contact information on the hackathon page</li>
+<li>For technical issues, contact the platform administrators</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="quick-start-guide"><a class="header" href="#quick-start-guide">Quick Start Guide</a></h1>
+<p>This guide will get you up and running with Hackcontrol in under 10 minutes.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>Node.js 18+ installed</li>
+<li>Git installed</li>
+<li>CockroachDB account (free tier available)</li>
+<li>GitHub account for OAuth</li>
+</ul>
+<h2 id="1-clone-and-install"><a class="header" href="#1-clone-and-install">1. Clone and Install</a></h2>
+<pre><code class="language-bash">git clone https://github.com/raducarabat/hackcontrol.git
+cd hackcontrol
+npm install
+</code></pre>
+<h2 id="2-environment-setup"><a class="header" href="#2-environment-setup">2. Environment Setup</a></h2>
+<p>Create a <code>.env</code> file in the root directory:</p>
+<pre><code class="language-env"># Database
+DATABASE_URL="your-cockroachdb-connection-string"
+
+# NextAuth
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+
+# GitHub OAuth
+GITHUB_CLIENT_ID="your-github-client-id"
+GITHUB_CLIENT_SECRET="your-github-client-secret"
+</code></pre>
+<h2 id="3-database-setup"><a class="header" href="#3-database-setup">3. Database Setup</a></h2>
+<pre><code class="language-bash">npx prisma migrate dev --name init
+</code></pre>
+<p>This creates the initial migration and applies it to your database.</p>
+<h2 id="4-run-development-server"><a class="header" href="#4-run-development-server">4. Run Development Server</a></h2>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser.</p>
+<h2 id="5-first-login--admin-setup"><a class="header" href="#5-first-login--admin-setup">5. First Login &amp; Admin Setup</a></h2>
+<ol>
+<li>Click "Sign in with GitHub"</li>
+<li>Authorize the application</li>
+<li><strong>Important:</strong> Set your account as admin by running this SQL command in your CockroachDB console:</li>
+</ol>
+<pre><code class="language-sql">UPDATE users SET role = 'ADMIN' WHERE email = 'your-email@example.com';
+</code></pre>
+<p>Replace <code>your-email@example.com</code> with the email associated with your GitHub account.</p>
+<ol start="4">
+<li>Refresh the page - you now have full admin privileges!</li>
+</ol>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li>Read the <a href="getting-started/installation.html">Local Installation</a> guide for detailed setup</li>
+<li>Learn about <a href="getting-started/environment.html">Environment Configuration</a></li>
+<li>Explore the <a href="getting-started/../architecture/project-structure.html">Project Structure</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-installation"><a class="header" href="#local-installation">Local Installation</a></h1>
+<p>Complete guide for setting up Hackcontrol on your local development environment.</p>
+<h2 id="system-requirements"><a class="header" href="#system-requirements">System Requirements</a></h2>
+<ul>
+<li><strong>Node.js</strong>: Version 18.0 or higher</li>
+<li><strong>npm</strong>: Version 8.0 or higher (or pnpm/yarn)</li>
+<li><strong>Git</strong>: Latest version</li>
+<li><strong>Database</strong>: CockroachDB (cloud or local)</li>
+</ul>
+<h2 id="step-by-step-installation"><a class="header" href="#step-by-step-installation">Step-by-Step Installation</a></h2>
+<h3 id="1-clone-the-repository"><a class="header" href="#1-clone-the-repository">1. Clone the Repository</a></h3>
+<pre><code class="language-bash">git clone https://github.com/raducarabat/hackcontrol.git
+cd hackcontrol
+</code></pre>
+<h3 id="2-install-dependencies"><a class="header" href="#2-install-dependencies">2. Install Dependencies</a></h3>
+<p>Choose your preferred package manager:</p>
+<pre><code class="language-bash"># Using npm
+npm install
+
+# Using pnpm (recommended for faster installs)
+pnpm install
+
+# Using yarn
+yarn install
+</code></pre>
+<h3 id="3-environment-configuration"><a class="header" href="#3-environment-configuration">3. Environment Configuration</a></h3>
+<p>Copy the example environment file and configure it:</p>
+<pre><code class="language-bash">cp .env.example .env  # If available, or create new .env
+</code></pre>
+<p>Edit <code>.env</code> with your configuration:</p>
+<pre><code class="language-env"># CockroachDB connection string
+DATABASE_URL="postgresql://username:password@host:port/database?sslmode=require"
+
+# NextAuth configuration
+NEXTAUTH_SECRET="your-generated-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
+
+# GitHub OAuth Provider
+GITHUB_CLIENT_ID="your-github-app-client-id"
+GITHUB_CLIENT_SECRET="your-github-app-client-secret"
+</code></pre>
+<h3 id="4-database-migration"><a class="header" href="#4-database-migration">4. Database Migration</a></h3>
+<p>Apply the database schema:</p>
+<pre><code class="language-bash">npx prisma migrate dev --name init
+</code></pre>
+<p>This command will:</p>
+<ul>
+<li>Create migration files in <code>prisma/migrations/</code></li>
+<li>Apply the schema to your database</li>
+<li>Generate the Prisma client</li>
+</ul>
+<h3 id="5-set-admin-privileges"><a class="header" href="#5-set-admin-privileges">5. Set Admin Privileges</a></h3>
+<p>After your first login, grant yourself admin access:</p>
+<ol>
+<li>Sign in through the application once</li>
+<li>Connect to your CockroachDB console</li>
+<li>Run this SQL command:</li>
+</ol>
+<pre><code class="language-sql">UPDATE users SET role = 'ADMIN' WHERE email = 'your-github-email@example.com';
+</code></pre>
+<h3 id="6-start-development-server"><a class="header" href="#6-start-development-server">6. Start Development Server</a></h3>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<p>The application will be available at <a href="http://localhost:3000">http://localhost:3000</a>.</p>
+<h2 id="verification"><a class="header" href="#verification">Verification</a></h2>
+<p>To verify your installation:</p>
+<ol>
+<li><strong>Server starts</strong>: No errors in terminal</li>
+<li><strong>Database connected</strong>: Check Prisma Studio with <code>npm run studio</code></li>
+<li><strong>Authentication works</strong>: Can sign in with GitHub</li>
+<li><strong>Admin access</strong>: Can create new hackathons</li>
+</ol>
+<h2 id="common-issues"><a class="header" href="#common-issues">Common Issues</a></h2>
+<ul>
+<li><strong>Database connection errors</strong>: Check your <code>DATABASE_URL</code> format</li>
+<li><strong>Authentication fails</strong>: Verify GitHub OAuth app configuration</li>
+<li><strong>Migration errors</strong>: Ensure database exists and is accessible</li>
+<li><strong>Port conflicts</strong>: Change port with <code>npm run dev -- -p 3001</code></li>
+</ul>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
+<ul>
+<li>Configure your <a href="getting-started/environment.html">Environment Variables</a></li>
+<li>Set up your <a href="getting-started/database.html">Database</a> in detail</li>
+<li>Learn about the <a href="getting-started/../architecture/overview.html">Project Architecture</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="environment-configuration"><a class="header" href="#environment-configuration">Environment Configuration</a></h1>
+<p>Hackcontrol uses environment variables for configuration. This guide covers all required and optional environment variables.</p>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
+<p>All environment variables are validated using Zod schemas in <code>src/env/index.mjs</code>.</p>
+<h3 id="required-variables"><a class="header" href="#required-variables">Required Variables</a></h3>
+<h4 id="database"><a class="header" href="#database">Database</a></h4>
+<pre><code class="language-env">DATABASE_URL="postgresql://username:password@host:port/database?sslmode=require"
+</code></pre>
+<ul>
+<li><strong>Purpose</strong>: CockroachDB connection string</li>
+<li><strong>Format</strong>: PostgreSQL connection URL with SSL</li>
+<li><strong>Example</strong>: <code>postgresql://user:pass@cluster.cockroachdb.cloud:26257/hackcontrol?sslmode=require</code></li>
+</ul>
+<h4 id="nextauth-configuration"><a class="header" href="#nextauth-configuration">NextAuth Configuration</a></h4>
+<pre><code class="language-env">NEXTAUTH_SECRET="your-secret-key-here"
+NEXTAUTH_URL="http://localhost:3000"
+</code></pre>
+<ul>
+<li><strong>NEXTAUTH_SECRET</strong>: Random string for JWT signing (use <code>openssl rand -base64 32</code>)</li>
+<li><strong>NEXTAUTH_URL</strong>: Your application's URL (production or development)</li>
+</ul>
+<h4 id="github-oauth"><a class="header" href="#github-oauth">GitHub OAuth</a></h4>
+<pre><code class="language-env">GITHUB_CLIENT_ID="your-github-app-client-id"
+GITHUB_CLIENT_SECRET="your-github-app-secret"
+</code></pre>
+<ul>
+<li><strong>GITHUB_CLIENT_ID</strong>: Public identifier from your GitHub OAuth app</li>
+<li><strong>GITHUB_CLIENT_SECRET</strong>: Secret key from your GitHub OAuth app</li>
+</ul>
+<h3 id="optional-variables"><a class="header" href="#optional-variables">Optional Variables</a></h3>
+<h4 id="node-environment"><a class="header" href="#node-environment">Node Environment</a></h4>
+<pre><code class="language-env">NODE_ENV="development"  # or "production" or "test"
+</code></pre>
+<h4 id="vercel-deployment"><a class="header" href="#vercel-deployment">Vercel Deployment</a></h4>
+<pre><code class="language-env">VERCEL_URL="your-app.vercel.app"  # Automatically set by Vercel
+</code></pre>
+<h2 id="environment-validation"><a class="header" href="#environment-validation">Environment Validation</a></h2>
+<p>The project uses Zod for runtime environment validation:</p>
+<pre><code class="language-typescript">// Server-side validation
+const server = z.object({
+  DATABASE_URL: z.string().url(),
+  NODE_ENV: z.enum(["development", "test", "production"]),
+  NEXTAUTH_SECRET: z.string().min(1),
+  NEXTAUTH_URL: z.string().url(),
+  GITHUB_CLIENT_ID: z.string().min(1),
+  GITHUB_CLIENT_SECRET: z.string().min(1),
+});
+</code></pre>
+<h2 id="creating-environment-files"><a class="header" href="#creating-environment-files">Creating Environment Files</a></h2>
+<h3 id="development-env"><a class="header" href="#development-env">Development (.env)</a></h3>
+<pre><code class="language-env">DATABASE_URL="postgresql://user:pass@localhost:26257/hackcontrol_dev?sslmode=disable"
+NEXTAUTH_SECRET="dev-secret-key-change-in-production"
+NEXTAUTH_URL="http://localhost:3000"
+GITHUB_CLIENT_ID="your-dev-github-client-id"
+GITHUB_CLIENT_SECRET="your-dev-github-client-secret"
+NODE_ENV="development"
+</code></pre>
+<h3 id="production-envproduction"><a class="header" href="#production-envproduction">Production (.env.production)</a></h3>
+<pre><code class="language-env">DATABASE_URL="postgresql://user:pass@cluster.cockroachdb.cloud:26257/hackcontrol?sslmode=require"
+NEXTAUTH_SECRET="super-secure-production-secret"
+NEXTAUTH_URL="https://your-domain.com"
+GITHUB_CLIENT_ID="your-prod-github-client-id"
+GITHUB_CLIENT_SECRET="your-prod-github-client-secret"
+NODE_ENV="production"
+</code></pre>
+<h2 id="security-best-practices"><a class="header" href="#security-best-practices">Security Best Practices</a></h2>
+<ol>
+<li><strong>Never commit <code>.env</code> files</strong> to version control</li>
+<li><strong>Use different OAuth apps</strong> for development and production</li>
+<li><strong>Generate strong secrets</strong> using cryptographically secure methods</li>
+<li><strong>Rotate secrets regularly</strong> in production</li>
+<li><strong>Use environment-specific databases</strong> to avoid data conflicts</li>
+</ol>
+<h2 id="generating-secrets"><a class="header" href="#generating-secrets">Generating Secrets</a></h2>
+<h3 id="nextauth_secret"><a class="header" href="#nextauth_secret">NEXTAUTH_SECRET</a></h3>
+<pre><code class="language-bash"># Using OpenSSL
+openssl rand -base64 32
+
+# Using Node.js
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
+</code></pre>
+<h2 id="environment-validation-errors"><a class="header" href="#environment-validation-errors">Environment Validation Errors</a></h2>
+<p>Common validation errors and solutions:</p>
+<ul>
+<li><strong>Invalid URL format</strong>: Ensure DATABASE_URL and NEXTAUTH_URL are properly formatted URLs</li>
+<li><strong>Missing required variables</strong>: All variables in the <code>server</code> schema must be provided</li>
+<li><strong>Client-side access</strong>: Server variables cannot be accessed on the client side</li>
+</ul>
+<h2 id="next-steps-2"><a class="header" href="#next-steps-2">Next Steps</a></h2>
+<ul>
+<li>Set up your <a href="getting-started/database.html">Database</a></li>
+<li>Configure <a href="getting-started/../configuration/github-oauth.html">GitHub OAuth</a></li>
+<li>Learn about <a href="getting-started/../deployment/environment-vars.html">Deployment Variables</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="database-setup"><a class="header" href="#database-setup">Database Setup</a></h1>
+<p>Hackcontrol uses CockroachDB as its database, managed through Prisma ORM. This guide covers database setup and management.</p>
+<h2 id="cockroachdb-setup"><a class="header" href="#cockroachdb-setup">CockroachDB Setup</a></h2>
+<h3 id="1-create-a-free-cluster"><a class="header" href="#1-create-a-free-cluster">1. Create a Free Cluster</a></h3>
+<ol>
+<li>Visit <a href="https://www.cockroachlabs.com/get-started-cockroachdb/">CockroachDB Cloud</a></li>
+<li>Sign up for a free account</li>
+<li>Create a new cluster:
+<ul>
+<li>Choose "Serverless" for free tier</li>
+<li>Select your preferred region</li>
+<li>Name your cluster (e.g., "hackcontrol-dev")</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-create-database-user"><a class="header" href="#2-create-database-user">2. Create Database User</a></h3>
+<ol>
+<li>In your cluster dashboard, go to "SQL Users"</li>
+<li>Create a new user:
+<ul>
+<li>Username: <code>hackcontrol_user</code> (or your preference)</li>
+<li>Generate a strong password</li>
+<li>Save the credentials securely</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-get-connection-string"><a class="header" href="#3-get-connection-string">3. Get Connection String</a></h3>
+<ol>
+<li>Click "Connect" on your cluster</li>
+<li>Select "General connection string"</li>
+<li>Copy the connection string</li>
+<li>Replace <code>&lt;username&gt;</code> and <code>&lt;password&gt;</code> with your user credentials</li>
+</ol>
+<p>Example connection string:</p>
+<pre><code>postgresql://hackcontrol_user:password@cluster-name.aws-region.cockroachlabs.cloud:26257/hackcontrol?sslmode=require
+</code></pre>
+<h2 id="database-schema"><a class="header" href="#database-schema">Database Schema</a></h2>
+<p>The application uses the following main models:</p>
+<h3 id="core-models"><a class="header" href="#core-models">Core Models</a></h3>
+<ul>
+<li><strong>Hackathon</strong>: Main hackathon events</li>
+<li><strong>Participation</strong>: User project submissions</li>
+<li><strong>User</strong>: User accounts and profiles</li>
+<li><strong>Judge</strong>: Judging assignments</li>
+<li><strong>Score</strong>: Judging scores</li>
+<li><strong>Announcement</strong>: Event announcements</li>
+</ul>
+<h3 id="authentication-models"><a class="header" href="#authentication-models">Authentication Models</a></h3>
+<ul>
+<li><strong>Account</strong>: OAuth account linking</li>
+<li><strong>Session</strong>: User sessions</li>
+<li><strong>VerificationToken</strong>: Email verification</li>
+</ul>
+<h2 id="prisma-migration"><a class="header" href="#prisma-migration">Prisma Migration</a></h2>
+<h3 id="initial-setup"><a class="header" href="#initial-setup">Initial Setup</a></h3>
+<p>Run the initial migration to create all tables:</p>
+<pre><code class="language-bash">npx prisma migrate dev --name init
+</code></pre>
+<h3 id="schema-changes"><a class="header" href="#schema-changes">Schema Changes</a></h3>
+<p>When you modify <code>prisma/schema.prisma</code>:</p>
+<pre><code class="language-bash"># Create and apply migration
+npx prisma migrate dev --name describe-your-change
+
+# Generate Prisma client
+npx prisma generate
+</code></pre>
+<h3 id="useful-commands"><a class="header" href="#useful-commands">Useful Commands</a></h3>
+<pre><code class="language-bash"># View database in Prisma Studio
+npm run studio
+
+# Reset database (development only)
+npx prisma migrate reset
+
+# Deploy migrations (production)
+npx prisma migrate deploy
+
+# Check migration status
+npx prisma migrate status
+</code></pre>
+<h2 id="database-administration"><a class="header" href="#database-administration">Database Administration</a></h2>
+<h3 id="setting-admin-role"><a class="header" href="#setting-admin-role">Setting Admin Role</a></h3>
+<p>After your first login, grant admin privileges:</p>
+<ol>
+<li>Open CockroachDB console or Prisma Studio</li>
+<li>Navigate to the <code>users</code> table</li>
+<li>Run this SQL command:</li>
+</ol>
+<pre><code class="language-sql">UPDATE users SET role = 'ADMIN' WHERE email = 'your-github-email@example.com';
+</code></pre>
+<p>Or using Prisma Studio:</p>
+<ol>
+<li>Open <code>npm run studio</code></li>
+<li>Navigate to <code>User</code> model</li>
+<li>Find your user record</li>
+<li>Change <code>role</code> from <code>USER</code> to <code>ADMIN</code></li>
+<li>Save changes</li>
+</ol>
+<h3 id="user-roles"><a class="header" href="#user-roles">User Roles</a></h3>
+<p>The application supports three user roles:</p>
+<ul>
+<li><strong>USER</strong>: Default role, can participate in hackathons</li>
+<li><strong>ORGANIZER</strong>: Can create and manage hackathons</li>
+<li><strong>ADMIN</strong>: Full system access, can manage all hackathons and users</li>
+</ul>
+<h2 id="backup-and-recovery"><a class="header" href="#backup-and-recovery">Backup and Recovery</a></h2>
+<h3 id="export-data"><a class="header" href="#export-data">Export Data</a></h3>
+<pre><code class="language-bash"># Export schema
+npx prisma db pull
+
+# Export data (using pg_dump)
+pg_dump $DATABASE_URL &gt; backup.sql
+</code></pre>
+<h3 id="restore-data"><a class="header" href="#restore-data">Restore Data</a></h3>
+<pre><code class="language-bash"># Restore from backup
+psql $DATABASE_URL &lt; backup.sql
+</code></pre>
+<h2 id="troubleshooting"><a class="header" href="#troubleshooting">Troubleshooting</a></h2>
+<h3 id="connection-issues"><a class="header" href="#connection-issues">Connection Issues</a></h3>
+<ul>
+<li>Verify connection string format</li>
+<li>Check firewall settings</li>
+<li>Ensure SSL mode is set correctly</li>
+</ul>
+<h3 id="migration-errors"><a class="header" href="#migration-errors">Migration Errors</a></h3>
+<ul>
+<li>Check for schema conflicts</li>
+<li>Verify database permissions</li>
+<li>Review migration history</li>
+</ul>
+<h3 id="performance"><a class="header" href="#performance">Performance</a></h3>
+<ul>
+<li>Monitor query performance in CockroachDB console</li>
+<li>Use Prisma query logging for development</li>
+<li>Consider database indexing for large datasets</li>
+</ul>
+<h2 id="next-steps-3"><a class="header" href="#next-steps-3">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="getting-started/../technologies/prisma.html">Prisma ORM</a></li>
+<li>Explore <a href="getting-started/../architecture/database-schema.html">Database Schema</a></li>
+<li>Set up <a href="getting-started/../development/workflow.html">Development Workflow</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project-overview"><a class="header" href="#project-overview">Project Overview</a></h1>
+<p>Hackcontrol is a modern, full-stack hackathon management system built with cutting-edge web technologies.</p>
+<h2 id="what-is-hackcontrol"><a class="header" href="#what-is-hackcontrol">What is Hackcontrol?</a></h2>
+<p>Hackcontrol is an open-source platform designed to streamline hackathon organization and participation. It provides tools for:</p>
+<ul>
+<li><strong>Event Management</strong>: Create, configure, and manage hackathon events</li>
+<li><strong>Participant Registration</strong>: Easy signup and project submission</li>
+<li><strong>Judging System</strong>: Structured evaluation and scoring</li>
+<li><strong>Team Management</strong>: Collaborative project development</li>
+<li><strong>Administrative Tools</strong>: User management and event oversight</li>
+</ul>
+<h2 id="architecture-overview"><a class="header" href="#architecture-overview">Architecture Overview</a></h2>
+<h3 id="full-stack-typescript"><a class="header" href="#full-stack-typescript">Full-Stack TypeScript</a></h3>
+<p>The entire application is built with TypeScript, ensuring type safety from database to UI:</p>
+<pre><code>┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   API Layer     │    │   Database      │
+│   (Next.js)     │◄──►│   (tRPC)        │◄──►│   (CockroachDB) │
+│   React + TS    │    │   TypeScript    │    │   + Prisma      │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+</code></pre>
+<h3 id="key-architectural-decisions"><a class="header" href="#key-architectural-decisions">Key Architectural Decisions</a></h3>
+<h4 id="type-safe-api-with-trpc"><a class="header" href="#type-safe-api-with-trpc">Type-Safe API with tRPC</a></h4>
+<ul>
+<li>End-to-end type safety</li>
+<li>Auto-generated TypeScript types</li>
+<li>Client-server contract validation</li>
+<li>Excellent developer experience</li>
+</ul>
+<h4 id="prisma-orm"><a class="header" href="#prisma-orm">Prisma ORM</a></h4>
+<ul>
+<li>Type-safe database operations</li>
+<li>Schema-first development</li>
+<li>Auto-generated client</li>
+<li>Migration management</li>
+</ul>
+<h4 id="component-based-ui"><a class="header" href="#component-based-ui">Component-Based UI</a></h4>
+<ul>
+<li>Reusable UI components with Radix UI</li>
+<li>Consistent design system</li>
+<li>Accessibility built-in</li>
+<li>Tailwind CSS for styling</li>
+</ul>
+<h4 id="authentication-strategy"><a class="header" href="#authentication-strategy">Authentication Strategy</a></h4>
+<ul>
+<li>NextAuth.js for session management</li>
+<li>GitHub OAuth integration</li>
+<li>JWT-based sessions</li>
+<li>Role-based access control</li>
+</ul>
+<h2 id="core-features"><a class="header" href="#core-features">Core Features</a></h2>
+<h3 id="for-participants-1"><a class="header" href="#for-participants-1">For Participants</a></h3>
+<ul>
+<li>GitHub authentication</li>
+<li>Project submission</li>
+<li>Team collaboration</li>
+<li>Progress tracking</li>
+<li>Real-time updates</li>
+</ul>
+<h3 id="for-organizers-1"><a class="header" href="#for-organizers-1">For Organizers</a></h3>
+<ul>
+<li>Hackathon creation and management</li>
+<li>Participant oversight</li>
+<li>Judge assignment</li>
+<li>Announcement system</li>
+<li>Event configuration</li>
+</ul>
+<h3 id="for-judges-1"><a class="header" href="#for-judges-1">For Judges</a></h3>
+<ul>
+<li>Streamlined evaluation interface</li>
+<li>Scoring system</li>
+<li>Project review tools</li>
+<li>Collaborative judging</li>
+</ul>
+<h3 id="for-administrators"><a class="header" href="#for-administrators">For Administrators</a></h3>
+<ul>
+<li>User management</li>
+<li>System-wide settings</li>
+<li>Analytics and reporting</li>
+<li>Platform maintenance</li>
+</ul>
+<h2 id="technology-benefits"><a class="header" href="#technology-benefits">Technology Benefits</a></h2>
+<h3 id="developer-experience"><a class="header" href="#developer-experience">Developer Experience</a></h3>
+<ul>
+<li><strong>Hot reloading</strong> for rapid development</li>
+<li><strong>Type safety</strong> prevents runtime errors</li>
+<li><strong>Auto-completion</strong> throughout the stack</li>
+<li><strong>Unified codebase</strong> with TypeScript</li>
+</ul>
+<h3 id="performance-1"><a class="header" href="#performance-1">Performance</a></h3>
+<ul>
+<li><strong>Static generation</strong> where possible</li>
+<li><strong>Incremental static regeneration</strong></li>
+<li><strong>Optimized database queries</strong> with Prisma</li>
+<li><strong>Client-side caching</strong> with React Query</li>
+</ul>
+<h3 id="scalability"><a class="header" href="#scalability">Scalability</a></h3>
+<ul>
+<li><strong>Serverless-ready</strong> architecture</li>
+<li><strong>Database connection pooling</strong></li>
+<li><strong>Horizontal scaling</strong> capabilities</li>
+<li><strong>CDN-optimized</strong> assets</li>
+</ul>
+<h3 id="security"><a class="header" href="#security">Security</a></h3>
+<ul>
+<li><strong>Environment variable validation</strong></li>
+<li><strong>SQL injection prevention</strong> via Prisma</li>
+<li><strong>CSRF protection</strong> built-in</li>
+<li><strong>Secure authentication</strong> flows</li>
+</ul>
+<h2 id="project-goals"><a class="header" href="#project-goals">Project Goals</a></h2>
+<ol>
+<li><strong>Simplicity</strong>: Easy to use for all stakeholders</li>
+<li><strong>Reliability</strong>: Robust system for critical events</li>
+<li><strong>Extensibility</strong>: Plugin-ready architecture</li>
+<li><strong>Performance</strong>: Fast and responsive experience</li>
+<li><strong>Accessibility</strong>: Inclusive design principles</li>
+</ol>
+<h2 id="next-steps-4"><a class="header" href="#next-steps-4">Next Steps</a></h2>
+<ul>
+<li>Explore the <a href="architecture/tech-stack.html">Technology Stack</a></li>
+<li>Understand the <a href="architecture/project-structure.html">Project Structure</a></li>
+<li>Review the <a href="architecture/database-schema.html">Database Schema</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="technology-stack"><a class="header" href="#technology-stack">Technology Stack</a></h1>
+<p>Hackcontrol is built with a modern, production-ready technology stack focused on type safety, developer experience, and performance.</p>
+<h2 id="frontend-technologies"><a class="header" href="#frontend-technologies">Frontend Technologies</a></h2>
+<h3 id="nextjs-1546"><a class="header" href="#nextjs-1546">Next.js 15.4.6</a></h3>
+<ul>
+<li><strong>Role</strong>: React framework and application foundation</li>
+<li><strong>Features</strong>: SSR, SSG, API routes, file-based routing</li>
+<li><strong>Benefits</strong>: Performance optimization, SEO, developer experience</li>
+<li><strong>Configuration</strong>: <code>next.config.mjs</code></li>
+</ul>
+<h3 id="react-1820"><a class="header" href="#react-1820">React 18.2.0</a></h3>
+<ul>
+<li><strong>Role</strong>: UI library for component-based architecture</li>
+<li><strong>Features</strong>: Hooks, context, concurrent rendering</li>
+<li><strong>Benefits</strong>: Component reusability, virtual DOM, large ecosystem</li>
+</ul>
+<h3 id="typescript-516"><a class="header" href="#typescript-516">TypeScript 5.1.6</a></h3>
+<ul>
+<li><strong>Role</strong>: Static type checking and enhanced developer experience</li>
+<li><strong>Features</strong>: Type inference, interfaces, generics</li>
+<li><strong>Benefits</strong>: Catch errors at compile time, better IDE support</li>
+<li><strong>Configuration</strong>: <code>tsconfig.json</code></li>
+</ul>
+<h2 id="styling--ui"><a class="header" href="#styling--ui">Styling &amp; UI</a></h2>
+<h3 id="tailwind-css-333"><a class="header" href="#tailwind-css-333">Tailwind CSS 3.3.3</a></h3>
+<ul>
+<li><strong>Role</strong>: Utility-first CSS framework</li>
+<li><strong>Features</strong>: Responsive design, custom themes, JIT compilation</li>
+<li><strong>Benefits</strong>: Rapid development, consistent design, small bundle size</li>
+<li><strong>Configuration</strong>: <code>tailwind.config.cjs</code></li>
+</ul>
+<h3 id="radix-ui-primitives"><a class="header" href="#radix-ui-primitives">Radix UI Primitives</a></h3>
+<ul>
+<li><strong>Components</strong>: Dialog, Tabs, Tooltip</li>
+<li><strong>Role</strong>: Unstyled, accessible UI components</li>
+<li><strong>Benefits</strong>: Accessibility compliance, keyboard navigation, ARIA support</li>
+</ul>
+<h3 id="clsx-200"><a class="header" href="#clsx-200">clsx 2.0.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Conditional CSS class utility</li>
+<li><strong>Usage</strong>: Dynamic styling based on state/props</li>
+<li><strong>Benefits</strong>: Clean conditional styling patterns</li>
+</ul>
+<h3 id="framer-motion-10150"><a class="header" href="#framer-motion-10150">Framer Motion 10.15.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Animation library for React</li>
+<li><strong>Features</strong>: Declarative animations, gesture handling</li>
+<li><strong>Usage</strong>: Page transitions, micro-interactions</li>
+<li><strong>Location</strong>: <code>src/animations/</code></li>
+</ul>
+<h2 id="backend--api"><a class="header" href="#backend--api">Backend &amp; API</a></h2>
+<h3 id="trpc-10360"><a class="header" href="#trpc-10360">tRPC 10.36.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Type-safe API layer</li>
+<li><strong>Features</strong>: End-to-end type safety, auto-generated clients</li>
+<li><strong>Benefits</strong>: No code generation, excellent DX, runtime safety</li>
+<li><strong>Structure</strong>:
+<ul>
+<li>Router definitions in <code>src/trpc/routers/</code></li>
+<li>Client setup in <code>src/trpc/api.ts</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="prisma-510"><a class="header" href="#prisma-510">Prisma 5.1.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Database ORM and query builder</li>
+<li><strong>Features</strong>: Type-safe queries, migrations, schema management</li>
+<li><strong>Benefits</strong>: Auto-generated client, great TypeScript integration</li>
+<li><strong>Schema</strong>: <code>prisma/schema.prisma</code></li>
+</ul>
+<h3 id="nextauthjs-42411"><a class="header" href="#nextauthjs-42411">NextAuth.js 4.24.11</a></h3>
+<ul>
+<li><strong>Role</strong>: Authentication solution</li>
+<li><strong>Features</strong>: Multiple providers, session management, security</li>
+<li><strong>Provider</strong>: GitHub OAuth</li>
+<li><strong>Configuration</strong>: <code>src/lib/auth.ts</code></li>
+</ul>
+<h2 id="database-1"><a class="header" href="#database-1">Database</a></h2>
+<h3 id="cockroachdb"><a class="header" href="#cockroachdb">CockroachDB</a></h3>
+<ul>
+<li><strong>Role</strong>: Distributed SQL database</li>
+<li><strong>Features</strong>: Horizontal scaling, ACID compliance, PostgreSQL compatibility</li>
+<li><strong>Benefits</strong>: High availability, strong consistency, cloud-native</li>
+<li><strong>Connection</strong>: Via Prisma with PostgreSQL protocol</li>
+</ul>
+<h2 id="data--validation"><a class="header" href="#data--validation">Data &amp; Validation</a></h2>
+<h3 id="zod-32576"><a class="header" href="#zod-32576">Zod 3.25.76</a></h3>
+<ul>
+<li><strong>Role</strong>: Schema validation library</li>
+<li><strong>Usage</strong>:
+<ul>
+<li>API input validation</li>
+<li>Environment variable validation</li>
+<li>Form validation</li>
+</ul>
+</li>
+<li><strong>Location</strong>: <code>src/schema/</code> and <code>src/env/</code></li>
+</ul>
+<h3 id="superjson-1131"><a class="header" href="#superjson-1131">Superjson 1.13.1</a></h3>
+<ul>
+<li><strong>Role</strong>: JSON serialization with additional types</li>
+<li><strong>Features</strong>: Date, undefined, BigInt, Map, Set support</li>
+<li><strong>Usage</strong>: tRPC data transformation</li>
+<li><strong>Benefits</strong>: Preserves complex JavaScript types over network</li>
+</ul>
+<h3 id="react-hook-form-7452"><a class="header" href="#react-hook-form-7452">React Hook Form 7.45.2</a></h3>
+<ul>
+<li><strong>Role</strong>: Form state management</li>
+<li><strong>Features</strong>: Minimal re-renders, easy validation integration</li>
+<li><strong>Benefits</strong>: Performance, DX, Zod integration</li>
+</ul>
+<h2 id="development-tools"><a class="header" href="#development-tools">Development Tools</a></h2>
+<h3 id="eslint-8460"><a class="header" href="#eslint-8460">ESLint 8.46.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Code linting and style enforcement</li>
+<li><strong>Configuration</strong>: <code>.eslintrc.json</code></li>
+<li><strong>Extends</strong>: Next.js recommended config</li>
+</ul>
+<h3 id="prettier-300"><a class="header" href="#prettier-300">Prettier 3.0.0</a></h3>
+<ul>
+<li><strong>Role</strong>: Code formatting</li>
+<li><strong>Features</strong>: Opinionated formatting, Tailwind class sorting</li>
+<li><strong>Plugins</strong>: <code>prettier-plugin-tailwindcss</code></li>
+<li><strong>Configuration</strong>: <code>prettier.config.cjs</code></li>
+</ul>
+<h3 id="typescript-esnext"><a class="header" href="#typescript-esnext">TypeScript ESNext</a></h3>
+<ul>
+<li><strong>Target</strong>: ES5 for broad compatibility</li>
+<li><strong>Module</strong>: ESNext for optimal bundling</li>
+<li><strong>Features</strong>: Strict mode, path mapping (<code>@/*</code>)</li>
+</ul>
+<h2 id="additional-libraries"><a class="header" href="#additional-libraries">Additional Libraries</a></h2>
+<h3 id="ui-enhancement"><a class="header" href="#ui-enhancement">UI Enhancement</a></h3>
+<ul>
+<li><strong>Sonner 0.6.2</strong>: Toast notifications</li>
+<li><strong>Canvas Confetti 1.6.0</strong>: Celebration animations</li>
+<li><strong>@uiball/loaders 1.3.0</strong>: Loading indicators</li>
+<li><strong>Iconoir</strong>: SVG icon library</li>
+</ul>
+<h3 id="utilities"><a class="header" href="#utilities">Utilities</a></h3>
+<ul>
+<li><strong>nanoid 5.1.5</strong>: Unique ID generation</li>
+<li><strong>next-seo 6.1.0</strong>: SEO optimization</li>
+<li><strong>nextjs-progressbar 0.0.16</strong>: Page loading indicator</li>
+</ul>
+<h2 id="package-manager"><a class="header" href="#package-manager">Package Manager</a></h2>
+<p>The project supports multiple package managers:</p>
+<ul>
+<li><strong>npm</strong> (default)</li>
+<li><strong>pnpm</strong> (recommended for speed)</li>
+<li><strong>yarn</strong> (classic)</li>
+</ul>
+<p>All package managers work with the same <code>package.json</code> configuration.</p>
+<h2 id="build-pipeline"><a class="header" href="#build-pipeline">Build Pipeline</a></h2>
+<h3 id="development"><a class="header" href="#development">Development</a></h3>
+<pre><code class="language-bash">npm run dev          # Start dev server
+npm run lint         # Run ESLint
+npm run ts:check     # TypeScript compilation check
+npm run format       # Format code with Prettier
+</code></pre>
+<h3 id="production"><a class="header" href="#production">Production</a></h3>
+<pre><code class="language-bash">npm run build        # Build for production
+npm run start        # Start production server
+</code></pre>
+<h3 id="database-2"><a class="header" href="#database-2">Database</a></h3>
+<pre><code class="language-bash">npx prisma migrate dev    # Apply schema changes
+npx prisma generate      # Generate Prisma client
+npm run studio          # Open Prisma Studio
+</code></pre>
+<h2 id="architecture-benefits"><a class="header" href="#architecture-benefits">Architecture Benefits</a></h2>
+<ol>
+<li><strong>Type Safety</strong>: Full-stack TypeScript eliminates entire classes of runtime errors</li>
+<li><strong>Developer Experience</strong>: Hot reloading, auto-completion, and excellent tooling</li>
+<li><strong>Performance</strong>: Optimized builds, code splitting, and efficient rendering</li>
+<li><strong>Maintainability</strong>: Clear separation of concerns and modular architecture</li>
+<li><strong>Scalability</strong>: Serverless-ready components and efficient database layer</li>
+</ol>
+<h2 id="next-steps-5"><a class="header" href="#next-steps-5">Next Steps</a></h2>
+<ul>
+<li>Explore <a href="architecture/project-structure.html">Project Structure</a></li>
+<li>Learn about <a href="architecture/database-schema.html">Database Schema</a></li>
+<li>Dive into <a href="architecture/../technologies/trpc.html">tRPC Implementation</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="project-structure"><a class="header" href="#project-structure">Project Structure</a></h1>
+<p>Understanding the project structure is essential for effective development and maintenance.</p>
+<h2 id="root-directory"><a class="header" href="#root-directory">Root Directory</a></h2>
+<pre><code>hackcontrol/
+├── prisma/                 # Database schema and migrations
+├── public/                 # Static assets (images, icons)
+├── src/                    # Application source code
+├── scripts/                # Build and utility scripts
+├── .env                    # Environment variables (local)
+├── .env.example           # Environment template
+├── package.json           # Dependencies and scripts
+├── next.config.mjs        # Next.js configuration
+├── tailwind.config.cjs    # Tailwind CSS configuration
+├── tsconfig.json          # TypeScript configuration
+└── vercel.json           # Vercel deployment settings
+</code></pre>
+<h2 id="source-directory-src"><a class="header" href="#source-directory-src">Source Directory (<code>src/</code>)</a></h2>
+<h3 id="application-structure"><a class="header" href="#application-structure">Application Structure</a></h3>
+<pre><code>src/
+├── animations/            # Framer Motion animations
+├── components/           # Reusable React components
+├── env/                 # Environment validation
+├── layout/              # App layout components
+├── lib/                 # Utility libraries and configurations
+├── pages/               # Next.js pages and API routes
+├── schema/              # Zod validation schemas
+├── styles/              # Global CSS and Tailwind styles
+├── trpc/                # tRPC API setup and routers
+├── types/               # TypeScript type definitions
+└── ui/                  # UI component library
+</code></pre>
+<h2 id="detailed-breakdown"><a class="header" href="#detailed-breakdown">Detailed Breakdown</a></h2>
+<h3 id="prisma"><a class="header" href="#prisma"><code>/prisma</code></a></h3>
+<pre><code>prisma/
+├── migrations/          # Auto-generated migration files
+└── schema.prisma       # Database schema definition
+</code></pre>
+<p><strong>Purpose</strong>: Database schema management and migrations</p>
+<ul>
+<li><strong>schema.prisma</strong>: Defines all models, relationships, and database configuration</li>
+<li><strong>migrations/</strong>: Version-controlled database changes</li>
+</ul>
+<h3 id="srcanimations"><a class="header" href="#srcanimations"><code>/src/animations</code></a></h3>
+<pre><code>animations/
+└── show.tsx            # Page transition animations
+</code></pre>
+<p><strong>Purpose</strong>: Framer Motion animation components</p>
+<ul>
+<li>Page transitions and micro-interactions</li>
+<li>Consistent animation patterns across the app</li>
+</ul>
+<h3 id="srccomponents"><a class="header" href="#srccomponents"><code>/src/components</code></a></h3>
+<pre><code>components/
+├── announcementDisplay.tsx    # Announcement rendering
+├── announcementManager.tsx    # Admin announcement tools
+├── card.tsx                   # Generic card component
+├── copy.tsx                   # Copy-to-clipboard utility
+├── createNew.tsx              # New hackathon creation
+├── deleteHackathon.tsx        # Hackathon deletion
+├── editHackathon.tsx          # Hackathon editing
+├── finishHackathon.tsx        # Event completion
+├── hackathonCard.tsx          # Hackathon display card
+├── hackathonInfo.tsx          # Hackathon details
+├── judgeManager.tsx           # Judge management
+├── judgesDashboard.tsx        # Judge interface
+├── leaderboardDisplay.tsx     # Results display
+├── loading.tsx                # Loading states
+├── participationCard.tsx      # Participation display
+├── scoringInterface.tsx       # Scoring tools
+├── sendProject.tsx            # Project submission
+├── userSearch.tsx             # User lookup
+└── viewProject.tsx            # Project viewing
+</code></pre>
+<p><strong>Purpose</strong>: Feature-specific React components</p>
+<ul>
+<li>Business logic components</li>
+<li>Form handling and data submission</li>
+<li>Admin and user interfaces</li>
+</ul>
+<h3 id="srcenv"><a class="header" href="#srcenv"><code>/src/env</code></a></h3>
+<pre><code>env/
+└── index.mjs           # Environment variable validation
+</code></pre>
+<p><strong>Purpose</strong>: Runtime environment validation using Zod</p>
+<ul>
+<li>Validates all required environment variables</li>
+<li>Type-safe environment access</li>
+<li>Development vs production configurations</li>
+</ul>
+<h3 id="srclayout"><a class="header" href="#srclayout"><code>/src/layout</code></a></h3>
+<pre><code>layout/
+├── header.tsx          # Application header
+└── footer.tsx          # Application footer (if exists)
+</code></pre>
+<p><strong>Purpose</strong>: Layout components used across all pages</p>
+<ul>
+<li>Navigation and branding</li>
+<li>User authentication state</li>
+<li>Consistent UI structure</li>
+</ul>
+<h3 id="srclib"><a class="header" href="#srclib"><code>/src/lib</code></a></h3>
+<pre><code>lib/
+├── auth.ts             # NextAuth configuration
+└── prisma.ts           # Prisma client setup
+</code></pre>
+<p><strong>Purpose</strong>: Core library configurations and utilities</p>
+<ul>
+<li><strong>auth.ts</strong>: NextAuth providers, callbacks, and session handling</li>
+<li><strong>prisma.ts</strong>: Database client initialization and global instance</li>
+</ul>
+<h3 id="srcpages"><a class="header" href="#srcpages"><code>/src/pages</code></a></h3>
+<pre><code>pages/
+├── api/
+│   ├── auth/
+│   │   └── [...nextauth].ts    # NextAuth API route
+│   └── trpc/
+│       └── [trpc].ts           # tRPC API handler
+├── app/
+│   ├── index.tsx               # Dashboard/app home
+│   └── [url].tsx               # Individual hackathon pages
+├── auth/
+│   └── index.tsx               # Authentication page
+├── send/
+│   └── [url].tsx               # Project submission page
+├── _app.tsx                    # App wrapper with providers
+├── _document.tsx               # HTML document structure
+└── index.tsx                   # Landing page
+</code></pre>
+<p><strong>Purpose</strong>: Next.js file-based routing and API endpoints</p>
+<ul>
+<li><strong>pages/api/</strong>: Server-side API routes</li>
+<li><strong>pages/app/</strong>: Main application pages</li>
+<li><strong>pages/auth/</strong>: Authentication flow</li>
+<li><strong>pages/send/</strong>: Project submission</li>
+</ul>
+<h3 id="srcschema"><a class="header" href="#srcschema"><code>/src/schema</code></a></h3>
+<pre><code>schema/
+├── announcement.ts     # Announcement validation schemas
+├── hackathon.ts       # Hackathon validation schemas
+├── participation.ts   # Participation validation schemas
+└── scoring.ts         # Scoring validation schemas
+</code></pre>
+<p><strong>Purpose</strong>: Zod validation schemas for API inputs</p>
+<ul>
+<li>Type-safe form validation</li>
+<li>API request/response validation</li>
+<li>Shared validation logic</li>
+</ul>
+<h3 id="srctrpc"><a class="header" href="#srctrpc"><code>/src/trpc</code></a></h3>
+<pre><code>trpc/
+├── routers/
+│   ├── announcement.router.ts  # Announcement API
+│   ├── hackathon.router.ts     # Hackathon API
+│   ├── judge.router.ts         # Judge API
+│   ├── participation.router.ts # Participation API
+│   └── scoring.router.ts       # Scoring API
+├── api.ts              # Client-side tRPC setup
+├── index.ts            # tRPC initialization
+└── root.ts             # Main router composition
+</code></pre>
+<p><strong>Purpose</strong>: tRPC API layer with type-safe endpoints</p>
+<ul>
+<li><strong>routers/</strong>: Feature-specific API endpoints</li>
+<li><strong>api.ts</strong>: Client configuration with React Query</li>
+<li><strong>root.ts</strong>: Router composition and type exports</li>
+</ul>
+<h3 id="srctypes"><a class="header" href="#srctypes"><code>/src/types</code></a></h3>
+<pre><code>types/
+├── hackathon.ts        # Hackathon type definitions
+├── participation.ts    # Participation type definitions
+└── next-auth.d.ts      # NextAuth type extensions
+</code></pre>
+<p><strong>Purpose</strong>: TypeScript type definitions and extensions</p>
+<ul>
+<li>Database model types</li>
+<li>API response types</li>
+<li>Third-party library extensions</li>
+</ul>
+<h3 id="srcui"><a class="header" href="#srcui"><code>/src/ui</code></a></h3>
+<pre><code>ui/
+├── icons/              # SVG icon components
+└── [components].tsx    # Reusable UI components
+</code></pre>
+<p><strong>Purpose</strong>: Design system and UI component library</p>
+<ul>
+<li>Built with Radix UI primitives</li>
+<li>Styled with Tailwind CSS</li>
+<li>Consistent design patterns</li>
+</ul>
+<h2 id="file-naming-conventions"><a class="header" href="#file-naming-conventions">File Naming Conventions</a></h2>
+<h3 id="components"><a class="header" href="#components">Components</a></h3>
+<ul>
+<li><strong>PascalCase</strong> for component files: <code>HackathonCard.tsx</code></li>
+<li><strong>camelCase</strong> for utility functions: <code>getUserSession.ts</code></li>
+<li><strong>kebab-case</strong> for pages: <code>[hackathon-url].tsx</code></li>
+</ul>
+<h3 id="directories"><a class="header" href="#directories">Directories</a></h3>
+<ul>
+<li><strong>camelCase</strong> for source directories: <code>src/components/</code></li>
+<li><strong>kebab-case</strong> for page directories: <code>pages/api/auth/</code></li>
+</ul>
+<h2 id="import-patterns"><a class="header" href="#import-patterns">Import Patterns</a></h2>
+<h3 id="path-aliases"><a class="header" href="#path-aliases">Path Aliases</a></h3>
+<pre><code class="language-typescript">// Configured in tsconfig.json
+{
+  "paths": {
+    "@/*": ["./src/*"]
+  }
+}
+</code></pre>
+<h3 id="usage-examples"><a class="header" href="#usage-examples">Usage Examples</a></h3>
+<pre><code class="language-typescript">// Absolute imports using alias
+import { api } from "@/trpc/api";
+import { authOptions } from "@/lib/auth";
+import { HackathonCard } from "@/components/hackathonCard";
+
+// Relative imports for nearby files
+import { hackathonSchema } from "../schema/hackathon";
+</code></pre>
+<h2 id="configuration-files"><a class="header" href="#configuration-files">Configuration Files</a></h2>
+<h3 id="core-configuration"><a class="header" href="#core-configuration">Core Configuration</a></h3>
+<ul>
+<li><strong><code>next.config.mjs</code></strong>: Next.js framework settings</li>
+<li><strong><code>tailwind.config.cjs</code></strong>: Tailwind CSS customization</li>
+<li><strong><code>tsconfig.json</code></strong>: TypeScript compiler options</li>
+<li><strong><code>prisma/schema.prisma</code></strong>: Database schema</li>
+</ul>
+<h3 id="development-tools-1"><a class="header" href="#development-tools-1">Development Tools</a></h3>
+<ul>
+<li><strong><code>.eslintrc.json</code></strong>: Linting rules</li>
+<li><strong><code>prettier.config.cjs</code></strong>: Code formatting</li>
+<li><strong><code>.prettierignore</code></strong>: Files to skip formatting</li>
+</ul>
+<h3 id="deployment"><a class="header" href="#deployment">Deployment</a></h3>
+<ul>
+<li><strong><code>vercel.json</code></strong>: Vercel deployment configuration</li>
+<li><strong><code>.env.example</code></strong>: Environment variable template</li>
+</ul>
+<h2 id="development-workflow"><a class="header" href="#development-workflow">Development Workflow</a></h2>
+<h3 id="adding-new-features"><a class="header" href="#adding-new-features">Adding New Features</a></h3>
+<ol>
+<li>Define types in <code>/src/types</code></li>
+<li>Create Zod schemas in <code>/src/schema</code></li>
+<li>Build tRPC routers in <code>/src/trpc/routers</code></li>
+<li>Develop UI components in <code>/src/components</code></li>
+<li>Create pages in <code>/src/pages</code></li>
+</ol>
+<h3 id="database-changes"><a class="header" href="#database-changes">Database Changes</a></h3>
+<ol>
+<li>Modify <code>prisma/schema.prisma</code></li>
+<li>Run <code>npx prisma migrate dev --name feature-name</code></li>
+<li>Update related types and schemas</li>
+<li>Test with <code>npm run studio</code></li>
+</ol>
+<h2 id="next-steps-6"><a class="header" href="#next-steps-6">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="architecture/database-schema.html">Database Schema</a></li>
+<li>Explore <a href="architecture/../technologies/trpc.html">tRPC API Structure</a></li>
+<li>Understand <a href="architecture/../development/components.html">Component Development</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextjs-framework"><a class="header" href="#nextjs-framework">Next.js Framework</a></h1>
+<p>Next.js serves as the foundation of Hackcontrol, providing the React framework with powerful features for production applications.</p>
+<h2 id="nextjs-in-hackcontrol"><a class="header" href="#nextjs-in-hackcontrol">Next.js in Hackcontrol</a></h2>
+<h3 id="version--configuration"><a class="header" href="#version--configuration">Version &amp; Configuration</a></h3>
+<ul>
+<li><strong>Version</strong>: Next.js 15.4.6</li>
+<li><strong>Router</strong>: Pages Router (not App Router)</li>
+<li><strong>Configuration</strong>: <code>next.config.mjs</code></li>
+</ul>
+<h3 id="key-features-used"><a class="header" href="#key-features-used">Key Features Used</a></h3>
+<h4 id="file-based-routing"><a class="header" href="#file-based-routing">File-Based Routing</a></h4>
+<pre><code>src/pages/
+├── index.tsx              # / (Landing page)
+├── auth/
+│   └── index.tsx          # /auth (Sign in page)
+├── app/
+│   ├── index.tsx          # /app (Dashboard)
+│   └── [url].tsx          # /app/[hackathon-url]
+└── send/
+    └── [url].tsx          # /send/[hackathon-url]
+</code></pre>
+<h4 id="api-routes"><a class="header" href="#api-routes">API Routes</a></h4>
+<pre><code>src/pages/api/
+├── auth/
+│   └── [...nextauth].ts  # /api/auth/* (NextAuth)
+└── trpc/
+    └── [trpc].ts         # /api/trpc/* (tRPC handler)
+</code></pre>
+<h2 id="configuration"><a class="header" href="#configuration">Configuration</a></h2>
+<h3 id="nextjs-config"><a class="header" href="#nextjs-config">Next.js Config</a></h3>
+<pre><code class="language-javascript">// next.config.mjs
+!process.env.SKIP_ENV_VALIDATION &amp;&amp; (await import("./src/env/index.mjs"));
+
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/u/**",
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+</code></pre>
+<p><strong>Key settings:</strong></p>
+<ul>
+<li><strong>Environment validation</strong>: Loads and validates env vars at build time</li>
+<li><strong>React Strict Mode</strong>: Enabled for development safety</li>
+<li><strong>Image optimization</strong>: Configured for GitHub avatars</li>
+</ul>
+<h3 id="typescript-integration"><a class="header" href="#typescript-integration">TypeScript Integration</a></h3>
+<pre><code class="language-json">// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
+</code></pre>
+<h2 id="app-structure"><a class="header" href="#app-structure">App Structure</a></h2>
+<h3 id="root-app-component"><a class="header" href="#root-app-component">Root App Component</a></h3>
+<pre><code class="language-typescript">// src/pages/_app.tsx
+const App: AppType&lt;{ session: Session | null }&gt; = ({
+  Component,
+  pageProps: { session, ...pageProps },
+  router,
+}) =&gt; {
+  return (
+    &lt;SessionProvider session={session}&gt;
+      &lt;DefaultSeo {...nextSeoConfig} /&gt;
+      &lt;NextNProgress /&gt;
+      &lt;main className="font-sans"&gt;
+        &lt;Header /&gt;
+        &lt;Show routerKey={router.route}&gt;
+          &lt;Component {...pageProps} /&gt;
+        &lt;/Show&gt;
+        &lt;Toaster /&gt;
+      &lt;/main&gt;
+    &lt;/SessionProvider&gt;
+  );
+};
+
+export default api.withTRPC(App);
+</code></pre>
+<p><strong>Features integrated:</strong></p>
+<ul>
+<li><strong>SessionProvider</strong>: NextAuth session context</li>
+<li><strong>DefaultSeo</strong>: SEO configuration</li>
+<li><strong>NextNProgress</strong>: Page loading indicator</li>
+<li><strong>Show</strong>: Page transition animations</li>
+<li><strong>Toaster</strong>: Toast notifications (Sonner)</li>
+<li><strong>api.withTRPC</strong>: tRPC client wrapper</li>
+</ul>
+<h3 id="document-structure"><a class="header" href="#document-structure">Document Structure</a></h3>
+<pre><code class="language-typescript">// src/pages/_document.tsx
+// Custom document for HTML structure and font loading
+</code></pre>
+<h2 id="page-examples"><a class="header" href="#page-examples">Page Examples</a></h2>
+<h3 id="dynamic-routes"><a class="header" href="#dynamic-routes">Dynamic Routes</a></h3>
+<pre><code class="language-typescript">// src/pages/app/[url].tsx
+import { type GetServerSideProps } from "next";
+import { getServerAuthSession } from "@/lib/auth";
+
+export default function HackathonPage() {
+  const router = useRouter();
+  const hackathonUrl = router.query.url as string;
+  
+  const { data: hackathon, isLoading } = api.hackathon.getByUrl.useQuery({
+    url: hackathonUrl,
+  });
+
+  if (isLoading) return &lt;Loading /&gt;;
+  if (!hackathon) return &lt;NotFound /&gt;;
+
+  return &lt;HackathonDetails hackathon={hackathon} /&gt;;
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) =&gt; {
+  const session = await getServerAuthSession(ctx);
+  
+  return {
+    props: {
+      session,
+    },
+  };
+};
+</code></pre>
+<h3 id="api-route-handler"><a class="header" href="#api-route-handler">API Route Handler</a></h3>
+<pre><code class="language-typescript">// src/pages/api/trpc/[trpc].ts
+import { createNextApiHandler } from "@trpc/server/adapters/next";
+import { appRouter } from "@/trpc/root";
+import { createTRPCContext } from "@/trpc";
+
+export default createNextApiHandler({
+  router: appRouter,
+  createContext: createTRPCContext,
+  onError: env.NODE_ENV === "development"
+    ? ({ path, error }) =&gt; {
+        console.error(`❌ tRPC failed on ${path}: ${error.message}`);
+      }
+    : undefined,
+});
+</code></pre>
+<h2 id="features--integrations"><a class="header" href="#features--integrations">Features &amp; Integrations</a></h2>
+<h3 id="server-side-rendering-ssr"><a class="header" href="#server-side-rendering-ssr">Server-Side Rendering (SSR)</a></h3>
+<pre><code class="language-typescript">// For pages that need server-side data
+export const getServerSideProps: GetServerSideProps = async (ctx) =&gt; {
+  const session = await getServerAuthSession(ctx);
+  
+  // Pre-fetch data on server
+  const helpers = createServerSideHelpers({
+    router: appRouter,
+    ctx: { session, prisma },
+    transformer: superjson,
+  });
+
+  await helpers.hackathon.getByUrl.prefetch({ url: ctx.params?.url as string });
+
+  return {
+    props: {
+      trpcState: helpers.dehydrate(),
+      session,
+    },
+  };
+};
+</code></pre>
+<h3 id="image-optimization"><a class="header" href="#image-optimization">Image Optimization</a></h3>
+<pre><code class="language-typescript">// GitHub avatar optimization
+&lt;Image
+  src={user.image}
+  alt={user.name}
+  width={40}
+  height={40}
+  className="rounded-full"
+/&gt;
+</code></pre>
+<h3 id="seo-configuration"><a class="header" href="#seo-configuration">SEO Configuration</a></h3>
+<pre><code class="language-typescript">// next-seo.config.ts
+export const nextSeoConfig: DefaultSeoProps = {
+  title: "Hackcontrol",
+  description: "Open-source hackathon management system",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://hackcontrol.vercel.app/",
+    siteName: "Hackcontrol",
+  },
+};
+</code></pre>
+<h2 id="performance-features"><a class="header" href="#performance-features">Performance Features</a></h2>
+<h3 id="automatic-code-splitting"><a class="header" href="#automatic-code-splitting">Automatic Code Splitting</a></h3>
+<ul>
+<li>Each page is automatically split into separate bundles</li>
+<li>Reduces initial bundle size</li>
+<li>Improves load times</li>
+</ul>
+<h3 id="static-optimization"><a class="header" href="#static-optimization">Static Optimization</a></h3>
+<ul>
+<li>Static pages are pre-rendered at build time</li>
+<li>Dynamic pages use SSR when needed</li>
+<li>Optimal performance for different content types</li>
+</ul>
+<h3 id="image-optimization-1"><a class="header" href="#image-optimization-1">Image Optimization</a></h3>
+<ul>
+<li>Automatic image optimization and resizing</li>
+<li>WebP format support</li>
+<li>Lazy loading by default</li>
+</ul>
+<h2 id="development-features"><a class="header" href="#development-features">Development Features</a></h2>
+<h3 id="hot-reloading"><a class="header" href="#hot-reloading">Hot Reloading</a></h3>
+<ul>
+<li>Instant feedback during development</li>
+<li>Preserves component state when possible</li>
+<li>Fast refresh for React components</li>
+</ul>
+<h3 id="error-overlay"><a class="header" href="#error-overlay">Error Overlay</a></h3>
+<ul>
+<li>Detailed error information in development</li>
+<li>Source map support for debugging</li>
+<li>Stack trace with exact file locations</li>
+</ul>
+<h3 id="typescript-integration-1"><a class="header" href="#typescript-integration-1">TypeScript Integration</a></h3>
+<ul>
+<li>Zero-config TypeScript support</li>
+<li>Fast compilation with SWC</li>
+<li>Built-in type checking</li>
+</ul>
+<h2 id="build-process"><a class="header" href="#build-process">Build Process</a></h2>
+<h3 id="development-build"><a class="header" href="#development-build">Development Build</a></h3>
+<pre><code class="language-bash">npm run dev
+</code></pre>
+<ul>
+<li>Fast refresh enabled</li>
+<li>Source maps for debugging</li>
+<li>Detailed error reporting</li>
+</ul>
+<h3 id="production-build"><a class="header" href="#production-build">Production Build</a></h3>
+<pre><code class="language-bash">npm run build
+npm run start
+</code></pre>
+<ul>
+<li>Optimized bundles</li>
+<li>Static asset optimization</li>
+<li>Performance optimizations</li>
+</ul>
+<h2 id="environment-handling"><a class="header" href="#environment-handling">Environment Handling</a></h2>
+<h3 id="environment-variables-1"><a class="header" href="#environment-variables-1">Environment Variables</a></h3>
+<pre><code class="language-typescript">// Automatic environment validation
+!process.env.SKIP_ENV_VALIDATION &amp;&amp; (await import("./src/env/index.mjs"));
+</code></pre>
+<h3 id="runtime-configuration"><a class="header" href="#runtime-configuration">Runtime Configuration</a></h3>
+<ul>
+<li>Client vs server environment separation</li>
+<li>Secure environment variable access</li>
+<li>Build-time validation</li>
+</ul>
+<h2 id="deployment-1"><a class="header" href="#deployment-1">Deployment</a></h2>
+<h3 id="vercel-integration"><a class="header" href="#vercel-integration">Vercel Integration</a></h3>
+<pre><code class="language-json">// vercel.json
+{
+  "functions": {
+    "src/pages/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}
+</code></pre>
+<h3 id="static-assets"><a class="header" href="#static-assets">Static Assets</a></h3>
+<ul>
+<li>Automatic optimization</li>
+<li>CDN distribution</li>
+<li>Caching headers</li>
+</ul>
+<h2 id="best-practices"><a class="header" href="#best-practices">Best Practices</a></h2>
+<h3 id="page-organization"><a class="header" href="#page-organization">Page Organization</a></h3>
+<ul>
+<li>Group related pages in directories</li>
+<li>Use meaningful file names</li>
+<li>Implement proper error boundaries</li>
+</ul>
+<h3 id="performance-2"><a class="header" href="#performance-2">Performance</a></h3>
+<ul>
+<li>Minimize client-side JavaScript</li>
+<li>Use dynamic imports for large components</li>
+<li>Optimize images and assets</li>
+</ul>
+<h3 id="seo"><a class="header" href="#seo">SEO</a></h3>
+<ul>
+<li>Implement proper meta tags</li>
+<li>Use semantic HTML structure</li>
+<li>Optimize for Core Web Vitals</li>
+</ul>
+<h2 id="routing-patterns"><a class="header" href="#routing-patterns">Routing Patterns</a></h2>
+<h3 id="dynamic-routes-1"><a class="header" href="#dynamic-routes-1">Dynamic Routes</a></h3>
+<pre><code class="language-typescript">// [url].tsx - Single dynamic segment
+// [...slug].tsx - Catch-all routes
+// [[...slug]].tsx - Optional catch-all
+</code></pre>
+<h3 id="programmatic-navigation"><a class="header" href="#programmatic-navigation">Programmatic Navigation</a></h3>
+<pre><code class="language-typescript">import { useRouter } from "next/router";
+
+const router = useRouter();
+
+// Navigate to different pages
+router.push("/app");
+router.push(`/app/${hackathon.url}`);
+router.replace("/auth"); // Replace instead of push
+</code></pre>
+<h2 id="next-steps-7"><a class="header" href="#next-steps-7">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="technologies/typescript.html">TypeScript Configuration</a></li>
+<li>Explore <a href="technologies/tailwind.html">Tailwind CSS Integration</a></li>
+<li>Understand <a href="technologies/../development/workflow.html">Development Workflow</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="trpc-api-layer"><a class="header" href="#trpc-api-layer">tRPC API Layer</a></h1>
+<p>tRPC provides end-to-end type safety for Hackcontrol's API layer, eliminating the need for manual API type definitions.</p>
+<h2 id="what-is-trpc"><a class="header" href="#what-is-trpc">What is tRPC?</a></h2>
+<p>tRPC is a library that allows you to build fully type-safe APIs without schemas or code generation. It leverages TypeScript's type system to provide:</p>
+<ul>
+<li><strong>End-to-end type safety</strong>: From database to UI</li>
+<li><strong>Auto-completion</strong>: IDE support for API calls</li>
+<li><strong>Runtime safety</strong>: Type validation at runtime</li>
+<li><strong>Excellent DX</strong>: No manual type synchronization</li>
+</ul>
+<h2 id="api-architecture"><a class="header" href="#api-architecture">API Architecture</a></h2>
+<h3 id="frontend--api-flow"><a class="header" href="#frontend--api-flow">Frontend → API Flow</a></h3>
+<ol>
+<li><strong>Frontend calls tRPC</strong>: <code>api.hackathon.getAll.useQuery()</code></li>
+<li><strong>tRPC routes to Next.js</strong>: All calls go to <code>/api/trpc/[trpc].ts</code></li>
+<li><strong>Single handler routes internally</strong>: The <code>[trpc].ts</code> file routes to the correct tRPC router</li>
+<li><strong>Router executes</strong>: The specific router (e.g., <code>hackathon.router.ts</code>) handles the request</li>
+</ol>
+<pre><code>Frontend Component
+       ↓
+api.hackathon.getAll.useQuery()
+       ↓
+/api/trpc/[trpc].ts (Next.js API route)
+       ↓
+hackathon.router.ts (tRPC router)
+       ↓
+Prisma → CockroachDB
+</code></pre>
+<h3 id="router-structure"><a class="header" href="#router-structure">Router Structure</a></h3>
+<pre><code class="language-typescript">// src/trpc/root.ts
+export const appRouter = createTRPCRouter({
+  hackathon: hackathonRouter,      // Hackathon management
+  participation: participationRouter, // Project submissions
+  announcement: announcementRouter,   // Event announcements
+  judge: judgeRouter,                // Judge management
+  scoring: scoringRouter,            // Scoring system
+});
+</code></pre>
+<h2 id="client-configuration"><a class="header" href="#client-configuration">Client Configuration</a></h2>
+<h3 id="trpc-client-setup"><a class="header" href="#trpc-client-setup">tRPC Client Setup</a></h3>
+<pre><code class="language-typescript">// src/trpc/api.ts
+export const api = createTRPCNext&lt;AppRouter&gt;({
+  config() {
+    return {
+      transformer: superjson,  // Handle Date, undefined, etc.
+      links: [
+        loggerLink({
+          enabled: (opts) =&gt;
+            process.env.NODE_ENV === "development" ||
+            (opts.direction === "down" &amp;&amp; opts.result instanceof Error),
+        }),
+        httpBatchLink({
+          url: `${getBaseUrl()}/api/trpc`,
+        }),
+      ],
+    };
+  },
+  ssr: false,  // Client-side rendering
+});
+</code></pre>
+<h3 id="app-integration"><a class="header" href="#app-integration">App Integration</a></h3>
+<pre><code class="language-typescript">// src/pages/_app.tsx
+const App: AppType&lt;{ session: Session | null }&gt; = ({ Component, pageProps }) =&gt; {
+  return (
+    &lt;SessionProvider session={pageProps.session}&gt;
+      &lt;Component {...pageProps} /&gt;
+    &lt;/SessionProvider&gt;
+  );
+};
+
+export default api.withTRPC(App);  // Wrap app with tRPC
+</code></pre>
+<h2 id="router-examples"><a class="header" href="#router-examples">Router Examples</a></h2>
+<h3 id="public-procedures"><a class="header" href="#public-procedures">Public Procedures</a></h3>
+<pre><code class="language-typescript">// Anyone can call these
+export const hackathonRouter = createTRPCRouter({
+  getAll: publicProcedure
+    .query(async ({ ctx }) =&gt; {
+      return ctx.prisma.hackathon.findMany({
+        include: {
+          participations: true,
+          owner: true,
+        },
+      });
+    }),
+
+  getByUrl: publicProcedure
+    .input(z.object({ url: z.string() }))
+    .query(async ({ ctx, input }) =&gt; {
+      return ctx.prisma.hackathon.findUnique({
+        where: { url: input.url },
+      });
+    }),
+});
+</code></pre>
+<h3 id="protected-procedures"><a class="header" href="#protected-procedures">Protected Procedures</a></h3>
+<pre><code class="language-typescript">// Requires authentication
+create: protectedProcedure
+  .input(hackathonSchema)
+  .mutation(async ({ ctx, input }) =&gt; {
+    return ctx.prisma.hackathon.create({
+      data: {
+        ...input,
+        creatorId: ctx.session.user.id,
+      },
+    });
+  }),
+
+delete: protectedProcedure
+  .input(z.object({ id: z.string() }))
+  .mutation(async ({ ctx, input }) =&gt; {
+    // Check ownership or admin role
+    const hackathon = await ctx.prisma.hackathon.findUnique({
+      where: { id: input.id },
+    });
+    
+    if (hackathon?.creatorId !== ctx.session.user.id &amp;&amp; 
+        ctx.session.user.role !== "ADMIN") {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+
+    return ctx.prisma.hackathon.delete({
+      where: { id: input.id },
+    });
+  }),
+</code></pre>
+<h2 id="usage-in-components"><a class="header" href="#usage-in-components">Usage in Components</a></h2>
+<h3 id="queries-data-fetching"><a class="header" href="#queries-data-fetching">Queries (Data Fetching)</a></h3>
+<pre><code class="language-typescript">// Simple query
+const { data: hackathons, isLoading, error } = api.hackathon.getAll.useQuery();
+
+// Query with parameters
+const { data: hackathon } = api.hackathon.getByUrl.useQuery({ 
+  url: router.query.url as string 
+});
+
+// Conditional queries
+const { data: scores } = api.scoring.getScores.useQuery(
+  { participationId: participation.id },
+  { enabled: !!participation.id }  // Only run if ID exists
+);
+</code></pre>
+<h3 id="mutations-data-changes"><a class="header" href="#mutations-data-changes">Mutations (Data Changes)</a></h3>
+<pre><code class="language-typescript">const utils = api.useContext();
+
+const createHackathon = api.hackathon.create.useMutation({
+  onSuccess: (newHackathon) =&gt; {
+    // Invalidate and refetch
+    utils.hackathon.getAll.invalidate();
+    
+    // Or optimistic update
+    utils.hackathon.getAll.setData(undefined, (old) =&gt; 
+      old ? [...old, newHackathon] : [newHackathon]
+    );
+
+    toast.success("Hackathon created!");
+    router.push(`/app/${newHackathon.url}`);
+  },
+  onError: (error) =&gt; {
+    toast.error(error.message);
+  },
+});
+
+// Usage in form handler
+const handleSubmit = (data: HackathonInput) =&gt; {
+  createHackathon.mutate(data);
+};
+</code></pre>
+<h2 id="authentication-context"><a class="header" href="#authentication-context">Authentication Context</a></h2>
+<h3 id="context-creation"><a class="header" href="#context-creation">Context Creation</a></h3>
+<pre><code class="language-typescript">// src/trpc/index.ts
+export const createTRPCContext = async (opts: CreateNextContextOptions) =&gt; {
+  const { req, res } = opts;
+  
+  // Get session from NextAuth
+  const session = await getServerAuthSession({ req, res });
+
+  return {
+    session,
+    prisma,
+  };
+};
+</code></pre>
+<h3 id="using-session-in-procedures"><a class="header" href="#using-session-in-procedures">Using Session in Procedures</a></h3>
+<pre><code class="language-typescript">// Access current user
+const currentUser = ctx.session?.user;
+
+// Check authentication
+if (!ctx.session) {
+  throw new TRPCError({ code: "UNAUTHORIZED" });
+}
+
+// Check admin role
+if (ctx.session.user.role !== "ADMIN") {
+  throw new TRPCError({ code: "FORBIDDEN" });
+}
+</code></pre>
+<h2 id="data-validation"><a class="header" href="#data-validation">Data Validation</a></h2>
+<h3 id="input-schemas"><a class="header" href="#input-schemas">Input Schemas</a></h3>
+<pre><code class="language-typescript">// Using Zod schemas from src/schema/
+import { hackathonSchema } from "@/schema/hackathon";
+
+create: protectedProcedure
+  .input(hackathonSchema)  // Validates input automatically
+  .mutation(async ({ ctx, input }) =&gt; {
+    // input is fully typed and validated
+    return ctx.prisma.hackathon.create({ data: input });
+  }),
+</code></pre>
+<h3 id="custom-validation"><a class="header" href="#custom-validation">Custom Validation</a></h3>
+<pre><code class="language-typescript">getParticipations: protectedProcedure
+  .input(z.object({
+    hackathonId: z.string().cuid(),
+    limit: z.number().min(1).max(100).default(10),
+    cursor: z.string().optional(),
+  }))
+  .query(async ({ ctx, input }) =&gt; {
+    // Pagination example
+    return ctx.prisma.participation.findMany({
+      where: { hackathonId: input.hackathonId },
+      take: input.limit + 1,
+      cursor: input.cursor ? { id: input.cursor } : undefined,
+    });
+  }),
+</code></pre>
+<h2 id="error-handling"><a class="header" href="#error-handling">Error Handling</a></h2>
+<h3 id="server-errors"><a class="header" href="#server-errors">Server Errors</a></h3>
+<pre><code class="language-typescript">// Standard tRPC error codes
+throw new TRPCError({ code: "NOT_FOUND" });      // 404
+throw new TRPCError({ code: "UNAUTHORIZED" });    // 401
+throw new TRPCError({ code: "FORBIDDEN" });       // 403
+throw new TRPCError({ code: "BAD_REQUEST" });     // 400
+throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" }); // 500
+
+// With custom messages
+throw new TRPCError({
+  code: "NOT_FOUND",
+  message: "Hackathon not found or access denied",
+});
+</code></pre>
+<h3 id="client-error-handling"><a class="header" href="#client-error-handling">Client Error Handling</a></h3>
+<pre><code class="language-typescript">const { data, error, isError, isLoading } = api.hackathon.getById.useQuery({ id });
+
+if (isError) {
+  // Handle specific error types
+  if (error.data?.code === "NOT_FOUND") {
+    return &lt;NotFoundPage /&gt;;
+  }
+  if (error.data?.code === "UNAUTHORIZED") {
+    router.push("/auth");
+    return null;
+  }
+  return &lt;ErrorDisplay message={error.message} /&gt;;
+}
+</code></pre>
+<h2 id="performance-optimization"><a class="header" href="#performance-optimization">Performance Optimization</a></h2>
+<h3 id="request-batching"><a class="header" href="#request-batching">Request Batching</a></h3>
+<p>tRPC automatically batches multiple requests:</p>
+<pre><code class="language-typescript">// These will be batched into a single HTTP request
+const hackathons = api.hackathon.getAll.useQuery();
+const announcements = api.announcement.getAll.useQuery();
+const userProfile = api.user.getProfile.useQuery();
+</code></pre>
+<h3 id="caching-strategies"><a class="header" href="#caching-strategies">Caching Strategies</a></h3>
+<pre><code class="language-typescript">// Cache indefinitely for static data
+const { data } = api.hackathon.getById.useQuery(
+  { id },
+  { 
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  }
+);
+
+// Background refetch for dynamic data
+const { data } = api.participation.getAll.useQuery(
+  undefined,
+  { 
+    refetchInterval: 30000,  // Refetch every 30 seconds
+    refetchOnWindowFocus: true,
+  }
+);
+</code></pre>
+<h2 id="type-inference"><a class="header" href="#type-inference">Type Inference</a></h2>
+<h3 id="router-types"><a class="header" href="#router-types">Router Types</a></h3>
+<pre><code class="language-typescript">// Auto-generated type helpers
+import type { RouterInputs, RouterOutputs } from "@/trpc/api";
+
+// Input types
+type HackathonCreateInput = RouterInputs["hackathon"]["create"];
+type ParticipationUpdateInput = RouterInputs["participation"]["update"];
+
+// Output types  
+type HackathonData = RouterOutputs["hackathon"]["getById"];
+type ParticipationList = RouterOutputs["participation"]["getAll"];
+</code></pre>
+<h2 id="best-practices-1"><a class="header" href="#best-practices-1">Best Practices</a></h2>
+<h3 id="router-organization"><a class="header" href="#router-organization">Router Organization</a></h3>
+<ul>
+<li>One router per feature domain</li>
+<li>Keep procedures focused and single-purpose</li>
+<li>Use consistent naming conventions</li>
+</ul>
+<h3 id="input-validation"><a class="header" href="#input-validation">Input Validation</a></h3>
+<ul>
+<li>Always validate inputs with Zod</li>
+<li>Reuse schemas between routers</li>
+<li>Provide meaningful error messages</li>
+</ul>
+<h3 id="authentication"><a class="header" href="#authentication">Authentication</a></h3>
+<ul>
+<li>Use middleware for common auth logic</li>
+<li>Implement role-based access control</li>
+<li>Handle unauthorized access gracefully</li>
+</ul>
+<h3 id="error-handling-1"><a class="header" href="#error-handling-1">Error Handling</a></h3>
+<ul>
+<li>Use appropriate tRPC error codes</li>
+<li>Provide user-friendly messages</li>
+<li>Log errors for debugging</li>
+</ul>
+<h2 id="next-steps-8"><a class="header" href="#next-steps-8">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="technologies/prisma.html">Prisma Integration</a></li>
+<li>Explore <a href="technologies/zod.html">Zod Validation</a></li>
+<li>Understand <a href="technologies/../development/api-development.html">API Development Workflow</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="prisma-orm-1"><a class="header" href="#prisma-orm-1">Prisma ORM</a></h1>
+<p>Prisma serves as the database layer for Hackcontrol, providing type-safe database operations and schema management.</p>
+<h2 id="what-is-prisma"><a class="header" href="#what-is-prisma">What is Prisma?</a></h2>
+<p>Prisma is a next-generation ORM that provides:</p>
+<ul>
+<li><strong>Type-safe database access</strong></li>
+<li><strong>Auto-generated client</strong></li>
+<li><strong>Schema-first development</strong></li>
+<li><strong>Migration management</strong></li>
+<li><strong>Query optimization</strong></li>
+</ul>
+<h2 id="database-configuration"><a class="header" href="#database-configuration">Database Configuration</a></h2>
+<h3 id="schema-definition"><a class="header" href="#schema-definition">Schema Definition</a></h3>
+<pre><code class="language-prisma">// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+</code></pre>
+<h3 id="client-setup"><a class="header" href="#client-setup">Client Setup</a></h3>
+<pre><code class="language-typescript">// src/lib/prisma.ts
+import { PrismaClient } from "@prisma/client";
+import { env } from "@/env/index.mjs";
+
+export const prisma =
+  global.prisma ||
+  new PrismaClient({
+    log: env.NODE_ENV === "development" 
+      ? ["query", "error", "warn"] 
+      : ["error"],
+  });
+
+if (env.NODE_ENV !== "production") {
+  global.prisma = prisma;
+}
+</code></pre>
+<h2 id="core-models-1"><a class="header" href="#core-models-1">Core Models</a></h2>
+<h3 id="hackathon-model"><a class="header" href="#hackathon-model">Hackathon Model</a></h3>
+<pre><code class="language-prisma">model Hackathon {
+  id                   String          @id @default(cuid())
+  name                 String
+  url                  String          @unique
+  description          String?
+  rules                String?
+  criteria             String?
+  owner                User?           @relation(fields: [creatorId], references: [id])
+  creatorId            String
+  updatedAt            DateTime        @default(now()) @updatedAt
+  is_finished          Boolean         @default(false)
+  verified             Boolean         @default(false)
+  min_judges_required  Int             @default(2)
+  participations       Participation[]
+  announcements        Announcement[]
+  Judge                Judge[]
+
+  @@unique([url, creatorId])
+  @@map(name: "hackathons")
+}
+</code></pre>
+<h3 id="user-model"><a class="header" href="#user-model">User Model</a></h3>
+<pre><code class="language-prisma">model User {
+  id               String          @id @default(cuid())
+  name             String?
+  username         String?         @unique
+  email            String?         @unique
+  emailVerified    DateTime?
+  image            String?
+  role             Role            @default(USER)
+  access           Boolean         @default(true)
+  accounts         Account[]
+  sessions         Session[]
+  hackathons       Hackathon[]
+  participations   Participation[]
+  judgedHackathons Judge[]
+  invitedJudges    Judge[]         @relation("JudgeInviter")
+
+  @@map(name: "users")
+}
+</code></pre>
+<h3 id="participation-model"><a class="header" href="#participation-model">Participation Model</a></h3>
+<pre><code class="language-prisma">model Participation {
+  id             String     @id @default(cuid())
+  is_reviewed    Boolean    @default(false)
+  is_winner      Boolean    @default(false)
+  title          String
+  description    String
+  project_url    String
+  hackathon_name String
+  hackathon_url  String
+  createdBy      User?      @relation(fields: [creatorId], references: [id])
+  creatorId      String
+  creatorName    String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  hackathon      Hackathon? @relation(fields: [hackathon_url], references: [url], onDelete: Cascade)
+  scores         Score[]
+  team_members   Json?
+
+  @@unique([creatorId, hackathon_url])
+  @@map(name: "participations")
+}
+</code></pre>
+<h2 id="usage-in-trpc-routers"><a class="header" href="#usage-in-trpc-routers">Usage in tRPC Routers</a></h2>
+<h3 id="basic-queries"><a class="header" href="#basic-queries">Basic Queries</a></h3>
+<pre><code class="language-typescript">// src/trpc/routers/hackathon.router.ts
+export const hackathonRouter = createTRPCRouter({
+  getAll: publicProcedure
+    .query(async ({ ctx }) =&gt; {
+      return ctx.prisma.hackathon.findMany({
+        include: {
+          participations: {
+            include: {
+              createdBy: true,
+            },
+          },
+          owner: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+      });
+    }),
+
+  getByUrl: publicProcedure
+    .input(z.object({ url: z.string() }))
+    .query(async ({ ctx, input }) =&gt; {
+      const hackathon = await ctx.prisma.hackathon.findUnique({
+        where: { url: input.url },
+        include: {
+          participations: {
+            include: {
+              createdBy: true,
+              scores: true,
+            },
+          },
+          announcements: {
+            orderBy: { createdAt: "desc" },
+          },
+          Judge: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+
+      if (!hackathon) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Hackathon not found",
+        });
+      }
+
+      return hackathon;
+    }),
+});
+</code></pre>
+<h3 id="mutations-with-validation"><a class="header" href="#mutations-with-validation">Mutations with Validation</a></h3>
+<pre><code class="language-typescript">create: protectedProcedure
+  .input(hackathonSchema)
+  .mutation(async ({ ctx, input }) =&gt; {
+    // Check if URL is unique
+    const existing = await ctx.prisma.hackathon.findUnique({
+      where: { url: input.url },
+    });
+
+    if (existing) {
+      throw new TRPCError({
+        code: "CONFLICT",
+        message: "Hackathon URL already exists",
+      });
+    }
+
+    return ctx.prisma.hackathon.create({
+      data: {
+        ...input,
+        creatorId: ctx.session.user.id,
+      },
+      include: {
+        owner: true,
+      },
+    });
+  }),
+</code></pre>
+<h2 id="advanced-prisma-features"><a class="header" href="#advanced-prisma-features">Advanced Prisma Features</a></h2>
+<h3 id="transactions"><a class="header" href="#transactions">Transactions</a></h3>
+<pre><code class="language-typescript">// Atomic operations
+updateWithScores: protectedProcedure
+  .input(participationUpdateSchema)
+  .mutation(async ({ ctx, input }) =&gt; {
+    return ctx.prisma.$transaction(async (tx) =&gt; {
+      // Update participation
+      const participation = await tx.participation.update({
+        where: { id: input.id },
+        data: input.data,
+      });
+
+      // Update related scores
+      await tx.score.updateMany({
+        where: { participationId: input.id },
+        data: { updatedAt: new Date() },
+      });
+
+      return participation;
+    });
+  }),
+</code></pre>
+<h3 id="aggregations"><a class="header" href="#aggregations">Aggregations</a></h3>
+<pre><code class="language-typescript">getStats: publicProcedure
+  .input(z.object({ hackathonId: z.string() }))
+  .query(async ({ ctx, input }) =&gt; {
+    const stats = await ctx.prisma.participation.aggregate({
+      where: { hackathon: { id: input.hackathonId } },
+      _count: { id: true },
+      _avg: { scores: { score: true } },
+    });
+
+    return {
+      totalParticipations: stats._count.id,
+      averageScore: stats._avg.scores?.score || 0,
+    };
+  }),
+</code></pre>
+<h3 id="raw-queries"><a class="header" href="#raw-queries">Raw Queries</a></h3>
+<pre><code class="language-typescript">// For complex queries not easily expressed in Prisma
+getLeaderboard: publicProcedure
+  .input(z.object({ hackathonUrl: z.string() }))
+  .query(async ({ ctx, input }) =&gt; {
+    return ctx.prisma.$queryRaw`
+      SELECT 
+        p.id,
+        p.title,
+        p."creatorName",
+        AVG(s.score)::float as average_score,
+        COUNT(s.id) as judge_count
+      FROM participations p
+      LEFT JOIN scores s ON p.id = s."participationId"
+      WHERE p.hackathon_url = ${input.hackathonUrl}
+      GROUP BY p.id, p.title, p."creatorName"
+      ORDER BY average_score DESC NULLS LAST
+    `;
+  }),
+</code></pre>
+<h2 id="migration-management"><a class="header" href="#migration-management">Migration Management</a></h2>
+<h3 id="development-workflow-1"><a class="header" href="#development-workflow-1">Development Workflow</a></h3>
+<pre><code class="language-bash"># Modify prisma/schema.prisma
+# Then create migration
+npx prisma migrate dev --name add-team-system
+
+# This will:
+# 1. Generate migration SQL
+# 2. Apply to database  
+# 3. Regenerate Prisma client
+</code></pre>
+<h3 id="production-deployment"><a class="header" href="#production-deployment">Production Deployment</a></h3>
+<pre><code class="language-bash"># Deploy migrations to production
+npx prisma migrate deploy
+
+# Generate client (usually in build process)
+npx prisma generate
+</code></pre>
+<h3 id="schema-changes-1"><a class="header" href="#schema-changes-1">Schema Changes</a></h3>
+<p>When adding new fields:</p>
+<pre><code class="language-prisma">model Participation {
+  // ... existing fields
+  team_members   Json?           // New field
+  submission_url String?         // Another new field
+}
+</code></pre>
+<p>Then run:</p>
+<pre><code class="language-bash">npx prisma migrate dev --name add-team-features
+</code></pre>
+<h2 id="database-tools"><a class="header" href="#database-tools">Database Tools</a></h2>
+<h3 id="prisma-studio"><a class="header" href="#prisma-studio">Prisma Studio</a></h3>
+<pre><code class="language-bash">npm run studio
+</code></pre>
+<p>Visual database browser for:</p>
+<ul>
+<li>Viewing and editing data</li>
+<li>Testing queries</li>
+<li>Managing relationships</li>
+<li>Debugging data issues</li>
+</ul>
+<h3 id="query-logging"><a class="header" href="#query-logging">Query Logging</a></h3>
+<p>Enable in development:</p>
+<pre><code class="language-typescript">const prisma = new PrismaClient({
+  log: ["query", "error", "warn"],  // See all SQL queries
+});
+</code></pre>
+<h2 id="best-practices-2"><a class="header" href="#best-practices-2">Best Practices</a></h2>
+<h3 id="model-design"><a class="header" href="#model-design">Model Design</a></h3>
+<ul>
+<li>Use descriptive field names</li>
+<li>Add appropriate indexes for performance</li>
+<li>Define proper relationships</li>
+<li>Use enums for constrained values</li>
+</ul>
+<h3 id="query-optimization"><a class="header" href="#query-optimization">Query Optimization</a></h3>
+<ul>
+<li>Include only needed relations</li>
+<li>Use select for specific fields</li>
+<li>Implement pagination for large datasets</li>
+<li>Consider database indexes</li>
+</ul>
+<h3 id="error-handling-2"><a class="header" href="#error-handling-2">Error Handling</a></h3>
+<ul>
+<li>Check for null results</li>
+<li>Handle unique constraint violations</li>
+<li>Provide meaningful error messages</li>
+<li>Use transactions for complex operations</li>
+</ul>
+<h3 id="security-1"><a class="header" href="#security-1">Security</a></h3>
+<ul>
+<li>Validate all inputs</li>
+<li>Check user permissions</li>
+<li>Sanitize user data</li>
+<li>Use parameterized queries (automatic with Prisma)</li>
+</ul>
+<h2 id="common-patterns"><a class="header" href="#common-patterns">Common Patterns</a></h2>
+<h3 id="finding-with-relations"><a class="header" href="#finding-with-relations">Finding with Relations</a></h3>
+<pre><code class="language-typescript">const hackathonWithData = await prisma.hackathon.findUnique({
+  where: { url: hackathonUrl },
+  include: {
+    participations: {
+      include: {
+        createdBy: true,
+        scores: {
+          include: {
+            judge: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+      },
+    },
+    announcements: true,
+  },
+});
+</code></pre>
+<h3 id="creating-with-relations"><a class="header" href="#creating-with-relations">Creating with Relations</a></h3>
+<pre><code class="language-typescript">const participation = await prisma.participation.create({
+  data: {
+    title: input.title,
+    description: input.description,
+    project_url: input.projectUrl,
+    hackathon: {
+      connect: { url: input.hackathonUrl },
+    },
+    createdBy: {
+      connect: { id: ctx.session.user.id },
+    },
+  },
+  include: {
+    hackathon: true,
+    createdBy: true,
+  },
+});
+</code></pre>
+<h2 id="next-steps-9"><a class="header" href="#next-steps-9">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="technologies/zod.html">Zod Validation</a></li>
+<li>Explore <a href="technologies/../architecture/database-schema.html">Database Schema</a></li>
+<li>Understand <a href="technologies/../development/workflow.html">Development Workflow</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nextauthjs-authentication"><a class="header" href="#nextauthjs-authentication">NextAuth.js Authentication</a></h1>
+<p>NextAuth.js provides secure, flexible authentication for Hackcontrol with GitHub OAuth integration.</p>
+<h2 id="authentication-setup"><a class="header" href="#authentication-setup">Authentication Setup</a></h2>
+<h3 id="configuration-1"><a class="header" href="#configuration-1">Configuration</a></h3>
+<pre><code class="language-typescript">// src/lib/auth.ts
+export const authOptions: NextAuthOptions = {
+  // Session strategy
+  session: {
+    strategy: "jwt",
+  },
+  
+  // Database adapter
+  adapter: PrismaAdapter(prisma),
+  
+  // OAuth providers
+  providers: [
+    GithubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+      profile(profile) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name || profile.login,
+          username: profile.login,
+          email: profile.email,
+          image: profile.avatar_url,
+        };
+      },
+    }),
+  ],
+  
+  // Custom pages
+  pages: {
+    signIn: "/auth",
+  },
+};
+</code></pre>
+<h3 id="api-route"><a class="header" href="#api-route">API Route</a></h3>
+<pre><code class="language-typescript">// src/pages/api/auth/[...nextauth].ts
+import { authOptions } from "@/lib/auth";
+import NextAuth from "next-auth";
+
+export default NextAuth(authOptions);
+</code></pre>
+<h2 id="authentication-flow"><a class="header" href="#authentication-flow">Authentication Flow</a></h2>
+<h3 id="1-user-access"><a class="header" href="#1-user-access">1. User Access</a></h3>
+<pre><code>User visits protected page
+       ↓
+Check session status
+       ↓
+No session? → Redirect to /auth
+       ↓
+Session exists? → Allow access
+</code></pre>
+<h3 id="2-github-oauth-flow"><a class="header" href="#2-github-oauth-flow">2. GitHub OAuth Flow</a></h3>
+<pre><code>Click "Sign in with GitHub"
+       ↓
+Redirect to GitHub OAuth
+       ↓
+User authorizes application
+       ↓
+GitHub redirects back with code
+       ↓
+NextAuth exchanges code for user data
+       ↓
+Create/update user in database
+       ↓
+Generate JWT session token
+       ↓
+Set session cookie
+</code></pre>
+<h2 id="session-management"><a class="header" href="#session-management">Session Management</a></h2>
+<h3 id="jwt-strategy"><a class="header" href="#jwt-strategy">JWT Strategy</a></h3>
+<pre><code class="language-typescript">// JWT callbacks
+callbacks: {
+  async jwt({ token, user }) {
+    const dbUser = await prisma.user.findFirst({
+      where: { email: token.email },
+    });
+    
+    if (!dbUser) {
+      token.id = user?.id;
+      token.role = "USER";
+      return token;
+    }
+    
+    return {
+      id: dbUser.id,
+      name: dbUser.name,
+      username: dbUser.username,
+      email: dbUser.email,
+      image: dbUser.image,
+      role: dbUser.role || "USER",
+    };
+  },
+  
+  async session({ token, session }) {
+    if (token) {
+      session.user.id = token.id;
+      session.user.name = token.name;
+      session.user.username = token.username;
+      session.user.email = token.email;
+      session.user.image = token.image;
+      session.user.role = token.role;
+    }
+    return session;
+  },
+},
+</code></pre>
+<h3 id="server-side-session-access"><a class="header" href="#server-side-session-access">Server-Side Session Access</a></h3>
+<pre><code class="language-typescript">// In API routes or getServerSideProps
+export const getServerAuthSession = async (ctx: {
+  req: GetServerSidePropsContext["req"];
+  res: GetServerSidePropsContext["res"];
+}) =&gt; {
+  return await getServerSession(ctx.req, ctx.res, authOptions);
+};
+
+// Usage in pages
+export const getServerSideProps: GetServerSideProps = async (ctx) =&gt; {
+  const session = await getServerAuthSession(ctx);
+  
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth",
+        permanent: false,
+      },
+    };
+  }
+  
+  return { props: { session } };
+};
+</code></pre>
+<h2 id="client-side-usage"><a class="header" href="#client-side-usage">Client-Side Usage</a></h2>
+<h3 id="session-provider"><a class="header" href="#session-provider">Session Provider</a></h3>
+<pre><code class="language-typescript">// src/pages/_app.tsx
+import { SessionProvider } from "next-auth/react";
+
+export default function App({ session, ...appProps }) {
+  return (
+    &lt;SessionProvider session={session}&gt;
+      &lt;Component {...pageProps} /&gt;
+    &lt;/SessionProvider&gt;
+  );
+}
+</code></pre>
+<h3 id="using-sessions-in-components"><a class="header" href="#using-sessions-in-components">Using Sessions in Components</a></h3>
+<pre><code class="language-typescript">import { useSession, signIn, signOut } from "next-auth/react";
+
+export default function Header() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") return &lt;Loading /&gt;;
+
+  if (session) {
+    return (
+      &lt;div&gt;
+        &lt;p&gt;Signed in as {session.user.email}&lt;/p&gt;
+        &lt;img src={session.user.image} alt="Profile" /&gt;
+        &lt;button onClick={() =&gt; signOut()}&gt;Sign out&lt;/button&gt;
+      &lt;/div&gt;
+    );
+  }
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Not signed in&lt;/p&gt;
+      &lt;button onClick={() =&gt; signIn("github")}&gt;Sign in with GitHub&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+<h2 id="protected-routes"><a class="header" href="#protected-routes">Protected Routes</a></h2>
+<h3 id="page-level-protection"><a class="header" href="#page-level-protection">Page-Level Protection</a></h3>
+<pre><code class="language-typescript">// Higher-order component for protection
+export function withAuth&lt;P extends {}&gt;(Component: React.ComponentType&lt;P&gt;) {
+  return function AuthenticatedComponent(props: P) {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    useEffect(() =&gt; {
+      if (status === "loading") return;
+      if (!session) router.push("/auth");
+    }, [session, status, router]);
+
+    if (status === "loading") return &lt;Loading /&gt;;
+    if (!session) return null;
+
+    return &lt;Component {...props} /&gt;;
+  };
+}
+
+// Usage
+export default withAuth(function ProtectedPage() {
+  return &lt;div&gt;This page requires authentication&lt;/div&gt;;
+});
+</code></pre>
+<h3 id="api-route-protection"><a class="header" href="#api-route-protection">API Route Protection</a></h3>
+<pre><code class="language-typescript">// tRPC protected procedure
+export const protectedProcedure = t.procedure.use(({ ctx, next }) =&gt; {
+  if (!ctx.session || !ctx.session.user) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      session: { ...ctx.session, user: ctx.session.user },
+    },
+  });
+});
+</code></pre>
+<h2 id="role-based-access-control"><a class="header" href="#role-based-access-control">Role-Based Access Control</a></h2>
+<h3 id="user-roles-1"><a class="header" href="#user-roles-1">User Roles</a></h3>
+<pre><code class="language-typescript">// prisma/schema.prisma
+enum Role {
+  ADMIN
+  ORGANIZER
+  USER
+}
+
+model User {
+  role Role @default(USER)
+  // ... other fields
+}
+</code></pre>
+<h3 id="role-checks"><a class="header" href="#role-checks">Role Checks</a></h3>
+<pre><code class="language-typescript">// tRPC admin procedure
+export const adminProcedure = protectedProcedure.use(({ ctx, next }) =&gt; {
+  if (ctx.session.user.role !== "ADMIN") {
+    throw new TRPCError({ 
+      code: "FORBIDDEN",
+      message: "Admin access required" 
+    });
+  }
+  return next({ ctx });
+});
+
+// Component role checking
+function AdminPanel() {
+  const { data: session } = useSession();
+  
+  if (session?.user.role !== "ADMIN") {
+    return &lt;div&gt;Access denied&lt;/div&gt;;
+  }
+  
+  return &lt;div&gt;Admin content&lt;/div&gt;;
+}
+</code></pre>
+<h2 id="custom-auth-pages"><a class="header" href="#custom-auth-pages">Custom Auth Pages</a></h2>
+<h3 id="sign-in-page"><a class="header" href="#sign-in-page">Sign In Page</a></h3>
+<pre><code class="language-typescript">// src/pages/auth/index.tsx
+import { getProviders, signIn, getSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+
+export default function SignIn({ providers }) {
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;Sign in to Hackcontrol&lt;/h1&gt;
+      {Object.values(providers).map((provider) =&gt; (
+        &lt;div key={provider.name}&gt;
+          &lt;button onClick={() =&gt; signIn(provider.id)}&gt;
+            Sign in with {provider.name}
+          &lt;/button&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) =&gt; {
+  const session = await getSession(context);
+  
+  if (session) {
+    return { redirect: { destination: "/app" } };
+  }
+
+  const providers = await getProviders();
+  return { props: { providers } };
+};
+</code></pre>
+<h2 id="database-integration"><a class="header" href="#database-integration">Database Integration</a></h2>
+<h3 id="prisma-adapter-models"><a class="header" href="#prisma-adapter-models">Prisma Adapter Models</a></h3>
+<pre><code class="language-prisma">// NextAuth required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+</code></pre>
+<h2 id="github-oauth-setup"><a class="header" href="#github-oauth-setup">GitHub OAuth Setup</a></h2>
+<h3 id="1-create-github-oauth-app"><a class="header" href="#1-create-github-oauth-app">1. Create GitHub OAuth App</a></h3>
+<ol>
+<li>Go to GitHub Settings &gt; Developer settings &gt; OAuth Apps</li>
+<li>Click "New OAuth App"</li>
+<li>Fill in details:
+<ul>
+<li><strong>Application name</strong>: "Hackcontrol"</li>
+<li><strong>Homepage URL</strong>: "http://localhost:3000" (dev) or your domain</li>
+<li><strong>Authorization callback URL</strong>: "http://localhost:3000/api/auth/callback/github"</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-environment-variables"><a class="header" href="#2-environment-variables">2. Environment Variables</a></h3>
+<pre><code class="language-env">GITHUB_CLIENT_ID="your-client-id"
+GITHUB_CLIENT_SECRET="your-client-secret"
+</code></pre>
+<h3 id="3-production-setup"><a class="header" href="#3-production-setup">3. Production Setup</a></h3>
+<p>For production, update:</p>
+<ul>
+<li>Homepage URL to your domain</li>
+<li>Callback URL to <code>https://yourdomain.com/api/auth/callback/github</code></li>
+</ul>
+<h2 id="security-features"><a class="header" href="#security-features">Security Features</a></h2>
+<h3 id="csrf-protection"><a class="header" href="#csrf-protection">CSRF Protection</a></h3>
+<ul>
+<li>Built-in CSRF protection</li>
+<li>Automatic token validation</li>
+<li>Secure cookie handling</li>
+</ul>
+<h3 id="session-security"><a class="header" href="#session-security">Session Security</a></h3>
+<pre><code class="language-typescript">// Secure session configuration
+session: {
+  strategy: "jwt",
+  maxAge: 30 * 24 * 60 * 60, // 30 days
+  updateAge: 24 * 60 * 60,    // 24 hours
+},
+</code></pre>
+<h3 id="cookie-configuration"><a class="header" href="#cookie-configuration">Cookie Configuration</a></h3>
+<pre><code class="language-typescript">cookies: {
+  sessionToken: {
+    name: "next-auth.session-token",
+    options: {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+    },
+  },
+},
+</code></pre>
+<h2 id="troubleshooting-1"><a class="header" href="#troubleshooting-1">Troubleshooting</a></h2>
+<h3 id="common-issues-1"><a class="header" href="#common-issues-1">Common Issues</a></h3>
+<ol>
+<li>
+<p><strong>Callback URL Mismatch</strong></p>
+<ul>
+<li>Ensure GitHub OAuth app callback URL matches exactly</li>
+<li>Include protocol (http/https)</li>
+</ul>
+</li>
+<li>
+<p><strong>Environment Variables</strong></p>
+<ul>
+<li>Verify GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET</li>
+<li>Check NEXTAUTH_SECRET is set</li>
+</ul>
+</li>
+<li>
+<p><strong>Database Issues</strong></p>
+<ul>
+<li>Ensure Prisma schema includes NextAuth models</li>
+<li>Run database migrations</li>
+</ul>
+</li>
+</ol>
+<h3 id="debug-mode"><a class="header" href="#debug-mode">Debug Mode</a></h3>
+<pre><code class="language-env">NEXTAUTH_DEBUG=true  # Enable detailed logging
+</code></pre>
+<h2 id="best-practices-3"><a class="header" href="#best-practices-3">Best Practices</a></h2>
+<h3 id="security-2"><a class="header" href="#security-2">Security</a></h3>
+<ul>
+<li>Always use HTTPS in production</li>
+<li>Set secure environment variables</li>
+<li>Implement proper role-based access</li>
+<li>Regularly rotate secrets</li>
+</ul>
+<h3 id="user-experience"><a class="header" href="#user-experience">User Experience</a></h3>
+<ul>
+<li>Provide clear sign-in/out flows</li>
+<li>Handle loading states gracefully</li>
+<li>Show appropriate error messages</li>
+<li>Implement session persistence</li>
+</ul>
+<h3 id="performance-3"><a class="header" href="#performance-3">Performance</a></h3>
+<ul>
+<li>Use JWT for stateless sessions</li>
+<li>Cache user roles appropriately</li>
+<li>Minimize database queries in callbacks</li>
+</ul>
+<h2 id="next-steps-10"><a class="header" href="#next-steps-10">Next Steps</a></h2>
+<ul>
+<li>Learn about <a href="technologies/../features/authentication.html">User Management</a></li>
+<li>Explore <a href="technologies/../features/hackathon-management.html">Role-Based Features</a></li>
+<li>Understand <a href="technologies/../development/security.html">Security Best Practices</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
