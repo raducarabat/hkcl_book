@@ -36,12 +36,11 @@ Once you're ready to submit your project:
 
 ### 1. Creating Your First Hackathon
 
-After signing in and getting admin privileges:
+After signing in and getting organizer privileges:
 
 1. **Go to your dashboard** (`/app`) and click "Create New Hackathon"
 2. **Set up your event**:
    - **Name**: Your hackathon's title
-   - **URL**: Custom path (like "spring-2024-hackathon")
    - **Description**: Event overview and goals
    - **Rules**: Participation guidelines and requirements
    - **Criteria**: How projects will be judged
@@ -63,7 +62,7 @@ After signing in and getting admin privileges:
 - Mark winners once judging is complete
 
 **Share Your Event**:
-- Copy and share your hackathon's custom URL
+- Copy and share your hackathon's URL
 - Participants can join directly without additional registration
 
 ### 3. Ending Your Hackathon
