@@ -38,7 +38,7 @@ Once you're ready to submit your project:
 
 After signing in and getting organizer privileges:
 
-1. **Go to your dashboard** (`/app`) and click "Create New Hackathon"
+1. **Go to your dashboard** (`/app`) and click "Create Hackathon"
 2. **Set up your event**:
    - **Name**: Your hackathon's title
    - **Description**: Event overview and goals
