@@ -6,7 +6,7 @@ Hackcontrol is a modern hackathon management platform that makes organizing and 
 
 ### 1. Joining a Hackathon
 
-When an organizer shares a Hackcontrol hackathon link (like `hackcontrol.dev/awesome-hackathon`), here's how to join:
+When an organizer shares a Hackcontrol hackathon link (like `hackcontrol.dev/dQ5YRq`), here's how to join:
 
 1. **Visit the hackathon page** using the provided link
 2. **Sign in with GitHub** - Click the "Sign in with GitHub" button and authorize the app
